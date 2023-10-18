@@ -1,7 +1,9 @@
 // THE GLOBAL OBJECT
 // NODE GIVES US ACCESS TO GLOBAL OBJECT THAT CONTAINS METHODS WE CAN USE.
 
-const { log } = require("console")
+const { WriteStream } = require("fs")
+
+// const { log } = require("console")
 
 
 // **************** IMPORTING AND EXPORTING ***************
@@ -66,7 +68,7 @@ const { log } = require("console")
 
 // IN ODER TO INTERACT WITH THE FILE SYSTEM YOU MUST THE BUILT IN CORE MODULE CALLED "FS"
 // EXAMPLE:
-// const fs = require("fs");
+// const fs = require("fs"); NEED THIS ON EVERY FILE WHERE WE WANT TO ACCESS/USE THE FILE SYSTEM.
 
 // ****** READING FILES
     // TAKES TWO PARAMS (FILE PATH, CALLBACK FUNCTION)
@@ -150,4 +152,49 @@ const { log } = require("console")
     // ****************** STREAMS AND BUFFERS *********************
     // ************************************************************
 
+      // ************ THEORY **********
+        // ***** STREAM *****
+        // STREAM ALLOWS US TO USE DATA FROM A FILE BEFORE IT IS FULLY READ, THAT IS
+        // BEFORE THE FILE IS FULLY LOADED (DON'T HAVE TO WAIT FOR IT TO BE COMPLETLY LOADED).
+
+        // ***** BUFFER *****
+        // A BUFFER HOLDS SMALL CHUNKS OF DATA.
+        // DATA IS BEING FED INTO A BUFFER, WHEN A BUFFER IS FULL IT IS SENT DOWN THE STREAM FOR US TO USE.
+        // DATA SOURCE -----> buffER -----> bufFER -----> buFFER ----> BUFFER -----> USEABLE DATA BUFFERS.
+     // *************************************
+
+    //   ******** READING STREAMS ********
+
+        // ASSIGNNING createReadStream() METHOD TO readMyStream variable.
+        // const readMyStream = fs.createReadStream("./docs/blog3.txt")
+
+        // CAN ADD A SECOND PARAM OF TYPE OBJ TO SPECIFY OTHER PARAMS: IN THIS EXAMPLE A ENCODING TYPE.
+        // const readMyStream = fs.createReadStream("./docs/blog3.txt", {encoding : "utf8"})
+
+          // EXAMPLE:
+
+            //     readMyStream.on("data", (chunk) => {          // (.on) IS AN EVENT LISTENER ATTACHED TO readMyStream VARIABLE.
+            //         console.log("------- NEW CHUNK -----");   // WE'RE USING IT TO LISTEN FOR A "data" EVENT ON readMyStream.
+            //         console.log(chunk);                       // IN OTHER WORDS EVERYTIME WE RECIEVE A BUFFER OF DATA ON THE STREAM.
+
+            //     })
+
+    //   ******** WRITTING STREAMS ********
+
+        // const WriteMyStream = fs.createWriteStream("./docs/blog4.txt");
+
+            //     readMyStream.on("data", (chunk) => {          
+            //         console.log("------- NEW CHUNK -----");   
+            //         console.log(chunk);                       
+            //         writeStream.write("\nNEW CHUNK\n");
+            //         writeStream.write(chunk);
+            //     })
+
+                // ***** USING PIPING **********
+        // ACCOMPLISHES THE RESULT AS ABOVE, BUT IN A MORE STREAMLINED MANNER.
+        // WHEN USING A PIPE IT MUST BE FROM A READABLE STREAM TO A WRITABLE STREAM.
+
+        // readMyStream.pipe(writeMyStream);
+
+    
     
