@@ -12,17 +12,17 @@
     // req OBJ = CONTAINS INFO SUCH AS URL, REQ TYPE (GET, POST, DELETE), AND OTEHR INFO.
     // res OBJ = THIS OBJ IS USED TO SEND A RESPONSE TO THE USER.
     
-        const testServer = http.createServer((req, res) => {
-                console.log("request made");
-            });
+        // const testServer = http.createServer((req, res) => {
+        //         console.log("request made");
+        //     });
     // ^^^ AT THIS POINT testServer IS NOT ACTUALLY DOING ANYTHING, IT'S NOT ACTIVELY LISTENING FOR ANY REQUESTS BEING SENT TO IT.
 
     // vvv TO ACTIVATE AND USE THIS SERVER WE HAVE TO INVOKE THE listen() METHOD.
     // listen() METHOD ACCEPTS A PORT NUMBER AS AN ARG, AND A SECOND ARG THAT IS THE HOST NAME. DEFAULT 2ND ARG IS "localhost". THE THIRD ARG IS A FUNCTION THAT IS CALLED THE SERVER STARTS LISTENING.
 
-        testServer.listen(3000, "localhost", () => {
-            console.log("listening for requests on port 3000");
-        });
+        // testServer.listen(3000, "localhost", () => {
+        //     console.log("listening for requests on port 3000");
+        // });
 
 
  //******** LOCAHOST AND PORT NUMBERS ***********
@@ -43,5 +43,101 @@
             // CAN BE ANY PORT NUM AS LONG AS ITS NOT BEING USED BY ANOTHER PROGRAM.
                 // localhost:3000
                 // control + c TO STOP THE SERVER.
+//*******************************************************      
 
 
+
+// **************** REQUESTS AND RESPOSES *****************
+// ********************************************************
+
+    // ******* THE REQUEST OBJ *************
+
+        // // ANYTIME A CHANGE IS MADE TO testServer THE PARENT FILE NEEDS TO BE RE-RAN IN THE TERMINAL. (node testServer)
+        // const testServer = http.createServer((req, res) => {
+        //     console.log(req.url, req.method);
+        //     //WILL USE (req.url, req.method) LATER FOR ROUTING THE USER TO THE PROPER PAGE;
+        // });
+
+
+
+        // testServer.listen(3000, "localhost", () => {
+        //     console.log("listening for requests on port 3000");
+        // });
+
+
+    // ******* THE RESPOSE OBJ *************
+    
+        // const testServer = http.createServer((req, res) => {
+        //     console.log(req.url, req.method);
+        //     //res OBJ IS USED TO SEND A RESPONSE TO THE BROWSER
+
+        //     // SETTING HEADER CONTENT TYPE:
+        //     // res.setHeader("Content-Type", "text/plain"); //CAN BE HTML, JSON, ETC
+        //     res.setHeader("Content-Type", "text/html");
+
+        //     // ACTUALLY SENDING THE DATA TO THE BROWSER;
+        //     // res.write("Hello, World!");
+        //     res.write("<h1>Hello, World!<h1>");
+        //     res.write("<h5>Hello, World!<h5>");
+        //     // HAVE TO END THE RESPONSE IN ORDER TO SEND THE DATA TO THE BROWSER
+        //     res.end();
+
+        // });
+
+        // testServer.listen(3000, "localhost", () => {
+        //     console.log("listening for requests on port 3000");
+        // });
+
+
+    // ********** RETURNING HTML PAGES *************   
+
+        //     const fs = require("fs");
+    
+    
+        //         const testServer = http.createServer((req, res) => {
+        //     console.log(req.url, req.method);
+
+        //     res.setHeader("Content-Type", "text/html");
+        //     fs.readFile("../views/index.html", (error, data) => {
+        //         if (error) {
+        //             console.log(error);
+        //             res.end(); //ALWAYS WANT TO END THIS RESPONSE AS WELL.
+        //         } else {
+        //             // res.write(data);
+        //             // res.end();
+        //             res.end(data); //IF ONLY SENDING ONE PIECE OF DATA, IT CAN BE DIRECTLY INPUTTED INTO .end() METHOD.
+        //         }
+        //     });
+        // });
+
+        // testServer.listen(3000, "localhost", () => {
+        //     console.log("listening for requests on port 3000");
+        // });
+
+
+
+    // ********** BASIC ROUTING *************
+
+        const fs = require("fs");
+                
+                
+        const testServer = http.createServer((req, res) => {
+            console.log(req.url, req.method);
+
+            res.setHeader("Content-Type", "text/html");
+            fs.readFile("../views/index.html", (error, data) => {
+                if (error) {
+                    console.log(error);
+                    res.end(); //ALWAYS WANT TO END THIS RESPONSE AS WELL.
+                } else {
+                    // res.write(data);
+                    // res.end();
+                    res.end(data); //IF ONLY SENDING ONE PIECE OF DATA, IT CAN BE DIRECTLY INPUTTED INTO .end() METHOD.
+                }
+            });
+            });
+
+        testServer.listen(3000, "localhost", () => {
+            console.log("listening for requests on port 3000");
+            });
+                
