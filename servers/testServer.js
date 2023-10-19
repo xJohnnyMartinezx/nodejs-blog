@@ -125,14 +125,26 @@
             console.log(req.url, req.method);
 
             res.setHeader("Content-Type", "text/html");
-            fs.readFile("../views/index.html", (error, data) => {
+
+            // SET UP PATH VARIBLE ASSIGN TO VIEWS DIR. 
+            // USING A SWICTH CASE TO DETERMINE WHAT URL THE USER IS ENTERING AND REDIRECT ACCORDINGLY.
+            let path = "../views/";
+                switch(req.url) {
+                    case "/" : path += "index.html";
+                        break;
+                    case "/about" : path += "about.html";
+                        break;
+                    default : path += "404.html";
+                        break;        
+                }
+                // fs.readFile("../views/index.html", (error, data) => {
+                     // vvv INSTEAD OF HADRCODING AN HTML PATH, WE CAN NOW USE THE path VARIABLE WE CREATED.
+            fs.readFile(path, (error, data) => {
                 if (error) {
                     console.log(error);
                     res.end(); //ALWAYS WANT TO END THIS RESPONSE AS WELL.
                 } else {
-                    // res.write(data);
-                    // res.end();
-                    res.end(data); //IF ONLY SENDING ONE PIECE OF DATA, IT CAN BE DIRECTLY INPUTTED INTO .end() METHOD.
+                    res.end(data);
                 }
             });
             });
