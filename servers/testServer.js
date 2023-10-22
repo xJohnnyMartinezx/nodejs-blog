@@ -118,38 +118,102 @@
 
     // ********** BASIC ROUTING *************
 
-        const fs = require("fs");
+        // const fs = require("fs");
                 
                 
-        const testServer = http.createServer((req, res) => {
-            console.log(req.url, req.method);
+        // const testServer = http.createServer((req, res) => {
+        //     console.log(req.url, req.method);
 
-            res.setHeader("Content-Type", "text/html");
+        //     res.setHeader("Content-Type", "text/html");
 
-            // SET UP PATH VARIBLE ASSIGN TO VIEWS DIR. 
-            // USING A SWICTH CASE TO DETERMINE WHAT URL THE USER IS ENTERING AND REDIRECT ACCORDINGLY.
-            let path = "../views/";
-                switch(req.url) {
-                    case "/" : path += "index.html";
-                        break;
-                    case "/about" : path += "about.html";
-                        break;
-                    default : path += "404.html";
-                        break;        
-                }
-                // fs.readFile("../views/index.html", (error, data) => {
-                     // vvv INSTEAD OF HADRCODING AN HTML PATH, WE CAN NOW USE THE path VARIABLE WE CREATED.
-            fs.readFile(path, (error, data) => {
-                if (error) {
-                    console.log(error);
-                    res.end(); //ALWAYS WANT TO END THIS RESPONSE AS WELL.
-                } else {
-                    res.end(data);
-                }
-            });
-            });
+        //     // SET UP PATH VARIBLE ASSIGN TO VIEWS DIR. 
+        //     // USING A SWICTH CASE TO DETERMINE WHAT URL THE USER IS ENTERING AND REDIRECT ACCORDINGLY.
+        //     let path = "../views/";
+        //         switch(req.url) {
+        //             case "/" : path += "index.html";
+        //                 break;
+        //             case "/about" : path += "about.html";
+        //                 break;
+        //             default : path += "404.html";
+        //                 break;        
+        //         }
+        //         // fs.readFile("../views/index.html", (error, data) => {
+        //              // vvv INSTEAD OF HADRCODING AN HTML PATH, WE CAN NOW USE THE path VARIABLE WE CREATED.
+        //     fs.readFile(path, (error, data) => {
+        //         if (error) {
+        //             console.log(error);
+        //             res.end(); //ALWAYS WANT TO END THIS RESPONSE AS WELL.
+        //         } else {
+        //             res.end(data);
+        //         }
+        //     });
+        //     });
 
-        testServer.listen(3000, "localhost", () => {
-            console.log("listening for requests on port 3000");
-            });
+        // testServer.listen(3000, "localhost", () => {
+        //     console.log("listening for requests on port 3000");
+        //     });
+                
+
+    // ********** STATUS CODES AND REDIRECTS *************
+
+           // MOST COMMON: 
+            // 200 - OK
+            // 301 - RESOURCE MOVED
+            // 404 - NOT FOUND
+            // 500 - INTERNAL SERVER ERROR
+
+        // RANGES :
+            // 100 RANGE - IMFORMATIONAL RESPOSES;
+            // 200 RANGE -  SUCCESS CODES
+            // 300 RANGE - CODES FOR REDIRECTS
+            // 400 RANGE - USER OR CLIENT ERROR CODES
+            // 500 RANGE - SERVER ERROR CODES
+            
+
+            const fs = require("fs");
+                
+                
+            const testServer = http.createServer((req, res) => {
+                console.log(req.url, req.method);
+    
+                res.setHeader("Content-Type", "text/html");
+    
+                // SET UP PATH VARIBLE ASSIGN TO VIEWS DIR. 
+                // USING A SWICTH CASE TO DETERMINE WHAT URL THE USER IS ENTERING AND REDIRECT ACCORDINGLY.
+                let path = "../views/";
+                    switch(req.url) {
+                        case "/" : path += "index.html";
+                        res.statusCode = 200; //SETTING A STATUS CODE FOR THE RESPONSE.
+                            break;
+                    //*********** REDIRECT EXAMPLE ********* */ 
+                        case "/about" : path += "about.html";
+                        res.statusCode = 200;
+                            break;
+                        case "/about-me" :
+                        res.statusCode = 301;  // 301 STATUS CODE (RESOURCE MOVED)
+                        res.setHeader("Location", "/about"); //SETTING LOCATION HEADER WITH NEW PATH.
+                        res.end(); // ALWAYS WANT TO END THE RESPOSE
+                            break;
+                        default : path += "404.html";
+                        res.statusCode = 404;
+                            break;        
+                    }
+                    // fs.readFile("../views/index.html", (error, data) => {
+                         // vvv INSTEAD OF HADRCODING AN HTML PATH, WE CAN NOW USE THE path VARIABLE WE CREATED.
+                fs.readFile(path, (error, data) => {
+                    if (error) {
+                        console.log(error);
+                        res.end(); //ALWAYS WANT TO END THIS RESPONSE AS WELL.
+                    } else {
+                        res.end(data);
+                    }
+                });
+                });
+    
+            testServer.listen(3000, "localhost", () => {
+                console.log("listening for requests on port 3000");
+                });
+                    
+
+
                 
