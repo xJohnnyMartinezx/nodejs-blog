@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
+
+    <title>Simple Blog | <%= title %></title>
 </head>
 <body>
+    <!-- ********* PASSING DATA INTO VIEWS NOTES ******** -->
+    <!-- EJS COMMENT TAG IS: <%# %> -->
+    <!--   EJS TAG EXAMPLE: <%# const name = "Johnny" %>   -->
+    <!--   ^^^ WILL RUN AS JS, BUT ON THE FRONT END, IT WILL DO SO ON THE SERVER -->
+    <!--   WHEN OUTPUTTING A VALUE TO THE SCREEN, YOU NEED = SIGN: (SEE TITLE EXAMPLE) -->
+
+
     <nav>
         <div class="site-tittle">
             <a href="/">Blogging Site</a>

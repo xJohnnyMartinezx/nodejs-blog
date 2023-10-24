@@ -46,17 +46,21 @@
             //WE EJS WE ARE NO LONGER SENDING A FILE
             // WE WILL NOW RENDER A VIEW BY PROVIDING THE NAME OF THE EJS FILE IN THE VIEWS DIR.
 
-            res.render("index");
+
+            // WE CAN PASS DATA TO OUR HTML AS A SECOND PARAM IN THE FOR OF AN OBJ.
+            // OBJS WILL BE ACCESSED THROUGH THE TITLE PROPERTY AND USE EJS SYNTAX IN EJS FILE.
+            // EAXMPLE ADDING TO THE TITLE TAG:
+            res.render("index", {title : "Home"});
 
         });
 
         app.get("/about", (req, res) => {
             // res.sendFile("./views/about.html", {root: __dirname});
-            res.render("about");
+            res.render("about", {title : "About"});
         });
 
         app.get("/blogs/create", (req, res) => {
-            res.render("create")
+            res.render("create", {title : "Create"})
         })
 
 
@@ -84,5 +88,5 @@
 
                 // res.status(404).sendFile("./views/404.html", {root: __dirname});
 
-                res.status(404).render("404");
+                res.status(404).render("404", {title : "404"});
             })
