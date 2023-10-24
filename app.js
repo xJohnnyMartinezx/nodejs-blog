@@ -8,11 +8,15 @@
     //AN app.js FILE IS TIPICALLY CREATED FOR EXPRESS APP.
 
     // NEED TO IMPORT EXPRESS USING REQUIRE METHOD.
+    const { log } = require("console");
     const express = require("express");
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
     const app = express();
+
+    // THIRD PARTY MIDDLEWARE
+    const morgan = require("morgan");
 
     // SPECIFYING THAT WE WANT TO USE EJS AS OUR RENDERING/TEMPLATING ENGINE.
     // .set() METHOD ALLOWS US TO CONFIGURE SOME APPPLICATION SETTINGS.
@@ -32,6 +36,38 @@
     //     res.send("<h1>Hello, World!<h1/>");
 
     // });
+
+    // ********* MIDDLEWARE EXAMPLE **********
+        // app.use((req, res) => {
+        //     console.log("new req made:");
+        //     console.log("host: ", req.hostname);
+        //     console.log("path: ", req.path);
+        //     console.log("mthod: ", req.method);
+        // });
+        // AFTER THIS MIDDLEWARE EXECUTES THE BROWSER WILL HANG, IT DOESNT KNOW WHAT TO DO AFTER. 
+        // THIS IS WHERE .next() COMES IN.
+    // ****** USING .next() **********
+            // INSERT next AS A PARAM AND THE CALL IT AT THE END.
+            // app.use((req, res, next) => {
+            //     console.log("new req made:");
+            //     console.log("host: ", req.hostname);
+            //     console.log("path: ", req.path);
+            //     console.log("mthod: ", req.method);
+            //     next();
+            //  // ^^^ TELLING EXPRESS THAT WE ARE DONE AND IT CAN CONTINUE TO THE NEXT PART.
+            // });
+
+            // app.use((req, res, next) => {
+            //     console.log("IN THE NEXT MIDDLEWARE");
+            //     next();
+            // });
+
+    // ********* THIRD PARTY MIDDLEWARE **********        
+            // ARE PREBUILT FUNCTIONS FOR US TO USE IN OUR APP.
+            // MORGAN MW EXAMPLE: 
+            app.use(morgan("dev"));
+
+
 
 
         //************ ROUNTING AND HTML ************ */
@@ -76,7 +112,7 @@
             // ********** HOW DOES THIS WORK???? ************
                 // VIEW FILES (EJS) LIVE ON THE SERVER.
                 // WHEN WE WANT TO RENDER ONE THROUGH THE BROWSER, IT IS PASSED TO THE EJS VIEW ENGINE TO BE PROCESSED.
-                // VIEW ENGINE LOOK ANY DYNAMIC CONTENT (VARIABLES, LOOPS, CONDITIONALS)
+                // VIEW ENGINE LOOKS FOR ANY DYNAMIC CONTENT (VARIABLES, LOOPS, CONDITIONALS)
                 // WHEN DYNAMIC CONTENT IS FOUND IT PROCESSES THE RESULTING HTML CODE AND PRODUCES A VALID HTML PAGE BASED ON
                 // THE TEMPLATE WRITTEN.
                 // LAST, THAT HTML PAGE ALONG WITH THE RESULTING DATA IN IT WILL BE RETURN TO THE BROWSER.
@@ -120,4 +156,4 @@
                 // res.status(404).sendFile("./views/404.html", {root: __dirname});
 
                 res.status(404).render("404", {title : "404"});
-            })
+            });

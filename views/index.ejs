@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Simple Blog | <%= title %></title>
-</head>
+<!-- ******* HEAD ******* -->
+    <%- include("./partials/head.ejs") %>
+<!-- ****************** -->
 <body>
     <!-- ********* PASSING DATA INTO VIEWS NOTES ******** -->
     <!-- EJS COMMENT TAG IS: <%# %> -->
@@ -13,19 +10,16 @@
     <!--   ^^^ WILL RUN AS JS, BUT ON THE FRONT END, IT WILL DO SO ON THE SERVER -->
     <!--   WHEN OUTPUTTING A VALUE TO THE SCREEN, YOU NEED = SIGN: (SEE TITLE EXAMPLE) -->
 
+<!-- ******** NAVBAR PARTIAL ******** -->
 
-    <nav>
-        <div class="site-tittle">
-            <a href="/">Blogging Site</a>
-            <p>Simple Blog</p>
-        </div>
-        <ul>
-            <li><a href="/">Blogs</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blogs/create">Create new a blog</a></li>
-        </ul>
-    </nav>
-    <div class="blog-content">
+<!-- FOR PARTIALS MUST USE includes() FUNCTION -->
+<!-- MINUS SIGN DOESNT ESCAPE SPECIAL CHARACTERS AND = DOES SO WITH = WE END UP A STRING VALUE. -->
+<%- include("./partials/nav.ejs") %>
+
+<!-- ******************************** -->
+
+
+    <div class="blog content">
         <h2>All Blogs</h2>
         <!-- CONDITIONAL USING EJS SYNTAX EAMPLE:  -->
         <% if (blogs.length > 0) { %>
@@ -41,6 +35,8 @@
 
 
     </div>
-    
+    <!-- ******* FOOTER ******* -->
+    <%- include("./partials/footer.ejs") %>
+    <!-- ********************** -->
 </body>
 </html>

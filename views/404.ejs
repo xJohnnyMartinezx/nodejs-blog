@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Blog | <%= title %></title>
-</head>
+<!-- ******* HEAD ******* -->
+<%- include("./partials/head.ejs") %>
+<!-- ****************** -->
 <body>
-    <nav>
-        <div class="site-tittle">
-            <a href="/">Blogging Site</a>
-            <p>Simple Blog</p>
-        </div>
-        <ul>
-            <li><a href="/">Blogs</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blogs/create">Create new a blog</a></li>
-        </ul>
-    </nav>
-    <div class="404-content">
+<!-- ******** NAVBAR PARTIAL ******** -->
+
+<!-- FOR PARTIALS MUST USE includes() FUNCTION -->
+<!-- MINUS SIGN DOESNT ESCAPE SPECIAL CHARACTERS AND = DOES SO WITH = WE END UP A STRING VALUE. -->
+<%- include("./partials/nav.ejs") %>
+
+<!-- ******************************** -->
+    <div class="404 content">
         <h1>404.........OOPS!</h1>
         <h2>That page does not exists!</h2>
     </div>
     
+
+        <!-- ******* FOOTER ******* -->
+        <%- include("./partials/footer.ejs") %>
+        <!-- ********************** -->
 </body>
 </html>
