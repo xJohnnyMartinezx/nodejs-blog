@@ -1,5 +1,6 @@
 // ******* INSTALLING EXPRESS *********
     // RUN npm install express AND THIS SHOUDL INSTALL IT AN ADD IT TO AS A DEPENDENCY
+    // EXPRESS IS A NODE.JS WEB APPLICATION FRAMEWORK.
 
 
 //******* USAGE ********/
@@ -12,6 +13,12 @@
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
     const app = express();
+
+    // SPECIFYING THAT WE WANT TO USE EJS AS OUR RENDERING/TEMPLATING ENGINE.
+    // .set() METHOD ALLOWS US TO CONFIGURE SOME APPPLICATION SETTINGS.
+    // SETTING THE VIEW ENGINE TO EJS
+    // EJS VIEWS ENGINE WILL AUTOMATICALLY LOOK FOR VIEWS IN THE VIEWS DIR.
+    app.set("view engine", "ejs");
 
 
     // LISTEN FOR REQUESTS:
@@ -33,12 +40,24 @@
             //res.sendFile() METHOD ACCEPTS AN ABSOLUTE PATH (ROOT),
             //BUT BECAUSE WE ARE PROVIDE A RELATIVE PATH (CURRETN WORKING DIR)
             //WE NEED TO PASS A SECOND "OPTIONS" ARGUMENT OF ROOT OBJECT. 
-            res.sendFile("./views/index.html", {root: __dirname});
+
+            // res.sendFile("./views/index.html", {root: __dirname});
+
+            //WE EJS WE ARE NO LONGER SENDING A FILE
+            // WE WILL NOW RENDER A VIEW BY PROVIDING THE NAME OF THE EJS FILE IN THE VIEWS DIR.
+
+            res.render("index");
+
         });
 
         app.get("/about", (req, res) => {
-            res.sendFile("./views/about.html", {root: __dirname});
+            // res.sendFile("./views/about.html", {root: __dirname});
+            res.render("about");
         });
+
+        app.get("/blogs/create", (req, res) => {
+            res.render("create")
+        })
 
 
         // ******** REDIRECTS AND 404's ************
@@ -62,5 +81,8 @@
             //******* THIS FUNCTION MUST BE AT THE BOTTOM *******
             app.use((req, res) => {
                 // HAVE TO MANUALLY SET A STATUS CODE. EXPRESS DOESN'T KNOW THIS IS AN ERROR
-                res.status(404).sendFile("./views/404.html", {root: __dirname});
+
+                // res.status(404).sendFile("./views/404.html", {root: __dirname});
+
+                res.status(404).render("404");
             })
