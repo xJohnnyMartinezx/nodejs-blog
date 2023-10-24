@@ -50,7 +50,38 @@
             // WE CAN PASS DATA TO OUR HTML AS A SECOND PARAM IN THE FOR OF AN OBJ.
             // OBJS WILL BE ACCESSED THROUGH THE TITLE PROPERTY AND USE EJS SYNTAX IN EJS FILE.
             // EAXMPLE ADDING TO THE TITLE TAG:
-            res.render("index", {title : "Home"});
+            // res.render("index", {title : "Home"});
+
+            // PASSING DATA EXAMPLE:
+
+            const blogs = [
+                    {
+                        title : "My First Blog",
+                        snippet : "This is the snippet for my First blog."
+                    },
+                    {
+                        title : "My Second Blog",
+                        snippet : "This is the snippet for my Second blog."
+                    },
+                    {
+                        title : "My Third Blog",
+                        snippet : "This is the snippet for my Third blog."
+                    }
+            ];
+
+            // res.render("index", {title : "Home", blogs : blogs});
+            // BECAUSE USING THE SAME NAME ^^^ WE CAN USE SHORTHAND.
+            res.render("index", {title : "Home", blogs});
+
+            // ********** HOW DOES THIS WORK???? ************
+                // VIEW FILES (EJS) LIVE ON THE SERVER.
+                // WHEN WE WANT TO RENDER ONE THROUGH THE BROWSER, IT IS PASSED TO THE EJS VIEW ENGINE TO BE PROCESSED.
+                // VIEW ENGINE LOOK ANY DYNAMIC CONTENT (VARIABLES, LOOPS, CONDITIONALS)
+                // WHEN DYNAMIC CONTENT IS FOUND IT PROCESSES THE RESULTING HTML CODE AND PRODUCES A VALID HTML PAGE BASED ON
+                // THE TEMPLATE WRITTEN.
+                // LAST, THAT HTML PAGE ALONG WITH THE RESULTING DATA IN IT WILL BE RETURN TO THE BROWSER.
+                // **** THIS ENTIRE PROCESS IS CALLED SERVER SIDE RENDERING *********
+
 
         });
 
