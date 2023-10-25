@@ -1,7 +1,7 @@
 // THE GLOBAL OBJECT
 // NODE GIVES US ACCESS TO GLOBAL OBJECT THAT CONTAINS METHODS WE CAN USE.
 
-const { WriteStream } = require("fs")
+// const { WriteStream } = require("fs")
 
 // const { log } = require("console")
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ******* HEAD ******* -->
+    <%- include("./partials/head.ejs") %>
+<!-- ****************** -->
+<body>
+    <!-- ********* PASSING DATA INTO VIEWS NOTES ******** -->
+    <!-- EJS COMMENT TAG IS: <%# %> -->
+    <!--   EJS TAG EXAMPLE: <%# const name = "Johnny" %>   -->
+    <!--   ^^^ WILL RUN AS JS, BUT ON THE FRONT END, IT WILL DO SO ON THE SERVER -->
+    <!--   WHEN OUTPUTTING A VALUE TO THE SCREEN, YOU NEED = SIGN: (SEE TITLE EXAMPLE) -->
+
+<!-- ******** NAVBAR PARTIAL ******** -->
+
+<!-- FOR PARTIALS MUST USE includes() FUNCTION -->
+<!-- MINUS SIGN DOESNT ESCAPE SPECIAL CHARACTERS AND = DOES SO WITH = WE END UP A STRING VALUE. -->
+<%- include("./partials/nav.ejs") %>
+
+<!-- ******************************** -->
+
+
+    <div class="blog content">
+        <h2>All Blogs</h2>
+        <!-- CONDITIONAL USING EJS SYNTAX EAMPLE:  -->
+        <% if (blogs.length > 0) { %>
+            <% blogs.forEach((blog) => { %>
+
+                <h3 class="title"><%= blog.title %></h3>
+                <p class="snippet"><%= blog.snippet %></p>
+
+            <% }) %>    <!-- NEED TO CLOSE OFF forEach() -->
+            <% } else { %> 
+                <p>There are no Blogs...</p>
+                <% } %>     <!-- NEED TO CLOSE OFF IF STATMENT CONDITIONAL -->
+
+
+    </div>
+    <!-- ******* FOOTER ******* -->
+    <%- include("./partials/footer.ejs") %>
+    <!-- ********************** -->
+</body>
+</html>
