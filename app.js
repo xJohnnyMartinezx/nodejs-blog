@@ -11,15 +11,18 @@
     const { log } = require("console");
     const express = require("express");
 
-        // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
-        const mongoose = require("mongoose");
+    // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
+    const mongoose = require("mongoose");
+    // IMPORTING OUR MODEL(S)
+    const Blog = require("./models/blog");
+
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
     const app = express();
 
         // MONGODB CONNECTION
-        const dbURI = "mongodb://localhost:27017"
+        const dbURI = "mongodb://localhost:27017/SimpleBlogDB"
         mongoose.connect(dbURI)
         .then((result) => {
             // console.log(result);
@@ -90,6 +93,25 @@
             // ARE PREBUILT FUNCTIONS FOR US TO USE IN OUR APP.
             // MORGAN MW EXAMPLE: 
             app.use(morgan("dev"));
+
+
+    //*********** TESTING MONGOOSE AND MONGO DB *********** */        
+            app.get("/add-blog", (req, res) => {
+                // CREATING A NEW INSTANCE OF Blog BY USING OUR IMPORT VARIABLE OF "Blog".
+                const blog = new Blog({
+                    title: "My Second Blog",
+                    snippet: "About my second blog post",
+                    body: "This is the body to my second blog post."
+                })
+
+                blog.save()
+                .then((results) => {
+                    res.send(results)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            });
 
             
 

@@ -4,20 +4,16 @@ const Schema = mongoose.Schema;
 
 // Schema IS A CONSTRUCTOR FUNCTION;
 
-const userSchema = new Schema({
-    fullName: {
+const blogSchema = new Schema({
+    title: {
         type: String,
         required: true
     },
-    userName: {
+    snippet: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
+    body: {
         type: String,
         required: true
     }
@@ -31,7 +27,7 @@ const userSchema = new Schema({
 // THE MODEL SURROUNDS THE SCHEMA AND PROVIDES AN INTERFACE TO COMMUNICATE WITH A DB COLLECTION FRO THAT DOC TYPE.
 
 // .model() METHODS TAKES IN THE NAME OF THIS MODEL AS A FIRST ARG (SINGULAR), SECOND ARG IS THE SCHEMA CREATED ABOVE
-const User = mongoose.model("User", userSchema);
+const Blog = mongoose.model("Blog", blogSchema);
 
 // NEXT WE EXPORT THIS MODEL FOR USE ANYWHERE IN PROJECT.
-module.exports = User;
+module.exports = Blog;
