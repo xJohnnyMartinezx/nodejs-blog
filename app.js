@@ -11,12 +11,30 @@
     const { log } = require("console");
     const express = require("express");
 
+        // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
+        const mongoose = require("mongoose");
+
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
     const app = express();
 
+        // MONGODB CONNECTION
+        const dbURI = "mongodb://localhost:27017"
+        mongoose.connect(dbURI)
+        .then((result) => {
+            // console.log(result);
+            // WANT TO LISTEN FOR REQUESTS AFTER CONN. TO DB IS ESTABLISHED.
+            app.listen(3000);
+            console.log("Connected to DB");
+
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+
     // THIRD PARTY MIDDLEWARE
     const morgan = require("morgan");
+
 
     // SPECIFYING THAT WE WANT TO USE EJS AS OUR RENDERING/TEMPLATING ENGINE.
     // .set() METHOD ALLOWS US TO CONFIGURE SOME APPPLICATION SETTINGS.
@@ -25,8 +43,9 @@
     app.set("view engine", "ejs");
 
 
-    // LISTEN FOR REQUESTS:
-    app.listen(3000);
+    // *** FROM PREVIOUSE LESSON ***
+    // // LISTEN FOR REQUESTS:
+    // app.listen(3000);
 
     // RESPONDING TO REQUESTS:
     // app.get("/", (req, res) => {
