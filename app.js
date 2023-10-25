@@ -62,10 +62,18 @@
             //     next();
             // });
 
-    // ********* THIRD PARTY MIDDLEWARE **********        
+    // ********* THIRD PARTY MIDDLEWARE **********   
+    
+            // STATIC FILES MIDDLEWARE
+                //EXPOSING THE "PUBLIC" DIR TO THE BROWSER
+                app.use(express.static("public"));
+
             // ARE PREBUILT FUNCTIONS FOR US TO USE IN OUR APP.
             // MORGAN MW EXAMPLE: 
             app.use(morgan("dev"));
+
+            
+
 
 
 
