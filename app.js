@@ -95,7 +95,8 @@
             app.use(morgan("dev"));
 
 
-    //*********** TESTING MONGOOSE AND MONGO DB *********** */        
+    //*********** TESTING MONGOOSE AND MONGO DB *********** */       
+            //  ***** SENDING DATA TO DB *******
             app.get("/add-blog", (req, res) => {
                 // CREATING A NEW INSTANCE OF Blog BY USING OUR IMPORT VARIABLE OF "Blog".
                 const blog = new Blog({
@@ -107,6 +108,30 @@
                 blog.save()
                 .then((results) => {
                     res.send(results)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            });
+
+            //  ***** RETREIVING DATA FROM DB *******
+            //  GETTING ALL BLOGS BY USING .find() METHOD.
+            app.get("/all-blogs", (req, res) => {
+                // NEED TO USE THE Blog MODEL TO GET ALL DOCUMENTS FROM THIS COLLECTION.
+                // .find() METHOD GETS ALL DOCS IN THE COLLECTION. (ASYNC SO TAKES SOME TIME TO DO.)
+                Blog.find()
+                .then((result) => {
+                    res.send(result)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            });
+            // GETTING A SINGLE BLOG BY USING .findBy Id() METHOD.
+            app.get("/single-blog", (req, res) => {
+                Blog.findById("65399f645a4cc54de208f452")
+                .then((result) => {
+                    res.send(result)
                 })
                 .catch((error) => {
                     console.log(error);
