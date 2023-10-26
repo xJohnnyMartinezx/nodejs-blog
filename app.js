@@ -96,47 +96,47 @@
 
 
     //*********** TESTING MONGOOSE AND MONGO DB *********** */       
-            //  ***** SENDING DATA TO DB *******
-            app.get("/add-blog", (req, res) => {
-                // CREATING A NEW INSTANCE OF Blog BY USING OUR IMPORT VARIABLE OF "Blog".
-                const blog = new Blog({
-                    title: "My Second Blog",
-                    snippet: "About my second blog post",
-                    body: "This is the body to my second blog post."
-                })
+            // //  ***** SENDING DATA TO DB *******
+            // app.get("/add-blog", (req, res) => {
+            //     // CREATING A NEW INSTANCE OF Blog BY USING OUR IMPORT VARIABLE OF "Blog".
+            //     const blog = new Blog({
+            //         title: "My Second Blog",
+            //         snippet: "About my second blog post",
+            //         body: "This is the body to my second blog post."
+            //     })
 
-                blog.save()
-                .then((results) => {
-                    res.send(results)
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            });
+            //     blog.save()
+            //     .then((results) => {
+            //         res.send(results)
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
+            // });
 
-            //  ***** RETREIVING DATA FROM DB *******
-            //  GETTING ALL BLOGS BY USING .find() METHOD.
-            app.get("/all-blogs", (req, res) => {
-                // NEED TO USE THE Blog MODEL TO GET ALL DOCUMENTS FROM THIS COLLECTION.
-                // .find() METHOD GETS ALL DOCS IN THE COLLECTION. (ASYNC SO TAKES SOME TIME TO DO.)
-                Blog.find()
-                .then((result) => {
-                    res.send(result)
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            });
-            // GETTING A SINGLE BLOG BY USING .findBy Id() METHOD.
-            app.get("/single-blog", (req, res) => {
-                Blog.findById("65399f645a4cc54de208f452")
-                .then((result) => {
-                    res.send(result)
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            });
+            // //  ***** RETREIVING DATA FROM DB *******
+            // //  GETTING ALL BLOGS BY USING .find() METHOD.
+            // app.get("/all-blogs", (req, res) => {
+            //     // NEED TO USE THE Blog MODEL TO GET ALL DOCUMENTS FROM THIS COLLECTION.
+            //     // .find() METHOD GETS ALL DOCS IN THE COLLECTION. (ASYNC SO TAKES SOME TIME TO DO.)
+            //     Blog.find()
+            //     .then((result) => {
+            //         res.send(result)
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
+            // });
+            // // GETTING A SINGLE BLOG BY USING .findBy Id() METHOD.
+            // app.get("/single-blog", (req, res) => {
+            //     Blog.findById("65399f645a4cc54de208f452")
+            //     .then((result) => {
+            //         res.send(result)
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
+            // });
 
             
 
@@ -164,24 +164,27 @@
 
             // PASSING DATA EXAMPLE:
 
-            const blogs = [
-                    {
-                        title : "My First Blog",
-                        snippet : "This is the snippet for my First blog."
-                    },
-                    {
-                        title : "My Second Blog",
-                        snippet : "This is the snippet for my Second blog."
-                    },
-                    {
-                        title : "My Third Blog",
-                        snippet : "This is the snippet for my Third blog."
-                    }
-            ];
+            // const blogs = [
+            //         {
+            //             title : "My First Blog",
+            //             snippet : "This is the snippet for my First blog."
+            //         },
+            //         {
+            //             title : "My Second Blog",
+            //             snippet : "This is the snippet for my Second blog."
+            //         },
+            //         {
+            //             title : "My Third Blog",
+            //             snippet : "This is the snippet for my Third blog."
+            //         }
+            // ];
 
-            // res.render("index", {title : "Home", blogs : blogs});
-            // BECAUSE USING THE SAME NAME ^^^ WE CAN USE SHORTHAND.
-            res.render("index", {title : "Home", blogs});
+            // // res.render("index", {title : "Home", blogs : blogs});
+            // // BECAUSE USING THE SAME NAME ^^^ WE CAN USE SHORTHAND.
+            // res.render("index", {title : "Home", blogs});
+            res.render("home", {title : "Home"});
+           
+        
 
             // ********** HOW DOES THIS WORK???? ************
                 // VIEW FILES (EJS) LIVE ON THE SERVER.
@@ -199,6 +202,23 @@
             // res.sendFile("./views/about.html", {root: __dirname});
             res.render("about", {title : "About"});
         });
+
+// ************************** BLOG ROUTES **********************************
+
+        app.get("/blogs", (req, res) => {
+            // CAN CHAIN ON METHODS TO FUTHER CUSTOMIZE/FILTER ITEMS.
+            // EXAMPLE: .sort() METHOD. THE (-1) MEANS DECENDING ORDER, SO NEWEST BLOG WILL BE ON TOP OF PAGE.
+                // Blog.find()
+                Blog.find().sort({createdAt: -1})
+                .then((result) => {
+                    res.render("index", {title: "All Blogs", blogs: result})
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            });
+
+
 
         app.get("/blogs/create", (req, res) => {
             res.render("create", {title : "Create"})
