@@ -94,6 +94,10 @@
             // MORGAN MW EXAMPLE: 
             app.use(morgan("dev"));
 
+            // POST REQUEST MIDDLEWARE
+            // THIS MIDDLEWARE ALLOW TO USE req.body AND GET ALL OF THE PROPERTIES BEING PASSED.
+                app.use(express.urlencoded({extended: true}));
+
 
     //*********** TESTING MONGOOSE AND MONGO DB *********** */       
             // //  ***** SENDING DATA TO DB *******
@@ -211,12 +215,65 @@
                 // Blog.find()
                 Blog.find().sort({createdAt: -1})
                 .then((result) => {
+                    // console.log(result);
                     res.render("index", {title: "All Blogs", blogs: result})
                 })
                 .catch((error) => {
                     console.log(error);
                 });
             });
+
+     // ******* POST REQUEST ********
+            app.post("/blogs",(req, res) => {
+                const blog = new Blog(req.body);
+
+                blog.save()
+                .then((result) => {
+                    res.redirect("/blogs");
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            });
+
+    // ************ ROUTE PARAMETERS ************
+          // ***** FIND BY ID ********  
+            // ARE THE VARIABLE PARTS OF THE ROUTE THAT MAY CHANGE EX: ID.
+            // localhost:3000/blogs/:id (id CAN CHANGE)
+            // NEED TO USE : TO DENOTE A ROUTE PARAMETER.
+                app.get("/blogs/:id", (req, res) => {
+                    // NEED TO EXTRACT THE id BY USING THE req OBJ
+                    const id = req.params.id; //.id IS WHATEVER THE PARA NAME IS. IN THIS CASE IT'S "id" FROM LINE 243.
+                    //   console.log(id);
+                    Blog.findById(id)
+                    // THIS vvv result WILL BE THE SINGLE BLOG BASED ON THE CURRENT id.
+                    .then((result) => {
+                        // NEXT WE WANT TO RENDER THE deatails PAGE.
+                                    // blog vvv IS JUST PROP NAME, CAN BE ANYTHING. 
+                        res.render("details", {blog: result, title: "Blog Detail"})
+                    })                                    // ^^^ THIS IS JUST THE PAGE TITLE.              
+                    .catch((error) => {
+                        console.log(error);
+                    })
+
+                })
+
+          // ***** DELETE BY ID ********   
+          
+                app.delete("/blogs/:id", (req, res) => {
+                    const id = req.params.id;
+                    Blog.findByIdAndDelete(id)
+                    .then((result) => {
+                        // WHEN SENDING AN AJAX REQUEST, WE CANNOT USE res.redirect IN NODE AS A RESPONSE. 
+                        // WE HAVE TO SEND JSON OR TEXT DATA BACK TO THE BROWSER.
+                        // res.redirect("/blogs")  *** CANNOT DO THIS.
+                        res.json({ redirect: "/blogs"})
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                })
+
 
 
 

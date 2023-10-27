@@ -9,3 +9,7 @@
 //     <% } else { %> 
 //         <p>There are no Blogs...</p>
 //         <% } %>     <!-- NEED TO CLOSE OFF IF STATMENT CONDITIONAL -->
+
+
+
+// <!-- <a class="delete" data-doc="<% blod._id%>">Delete</a> -->
