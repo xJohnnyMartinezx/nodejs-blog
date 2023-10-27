@@ -12,15 +12,16 @@
 
 <!-- ******************************** -->
     <div class="create-blog content">
-        <form>
+        <form action="/blogs" method="POST" >
             <label for="title">Blog title:</label>
-            <input type="text" id="title" required>
+            <!-- WILL USE THE NAME PROP TO ACCESS THE PROVIDED DATA ON THE SERVER -->
+            <input type="text" id="title" required name="title">
 
             <label for="snippet">Blog snippet:</label>
-            <input type="text" id="snippet" required>
+            <input type="text" id="snippet" required name="snippet">
 
             <label for="body">Blog body:</label>
-            <textarea type="text" id="body" required></textarea>
+            <textarea type="text" id="body" required name="body"></textarea>
 
             <button>Submit</button>
         </form>
