@@ -33,6 +33,7 @@ const getBlogById = (req, res) => {
         console.log("getBlogById works");
     })                                               
     .catch((error) => {
+        res.status(404).render("404", {title : "Blog not found."})
         console.log(error);
     })
 }
