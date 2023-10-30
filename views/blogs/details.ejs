@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- ******* HEAD ******* -->
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 <!-- ******************** -->
 <body>
 <!-- ******** NAVBAR PARTIAL ******** -->
 
 <!-- FOR PARTIALS MUST USE includes() FUNCTION -->
 <!-- MINUS SIGN DOESNT ESCAPE SPECIAL CHARACTERS AND = DOES SO WITH = WE END UP A STRING VALUE. -->
-<%- include("./partials/nav.ejs") %>
+<%- include("../partials/nav.ejs") %>
 
 <!-- ************* BLOG CONTENT ******************* -->
     <div class="details content">
@@ -18,7 +18,9 @@
             <p><%= blog._id %></p>
         </div>
 
-        <a id="delete-btn" data-blogDoc=" <%= blog._id %> ">Delete</a>
+        <a id="delete-btn" data-blogDoc=" <%= blog._id %> ">
+        <img src="/trashcan.svg" alt="Delete button">
+        </a>
 
     </div>
 
@@ -52,7 +54,7 @@
     
 
         <!-- ******* FOOTER ******* -->
-        <%- include("./partials/footer.ejs") %>
+        <%- include("../partials/footer.ejs") %>
         <!-- ********************** -->
 </body>
 </html>
