@@ -4,7 +4,10 @@
 const Blog = require("../models/blog");
 
 
-// ********** GET ALL BLOGS ***********
+// ************************* ROUTE FUNCTIONS ***************************
+// *********************************************************************
+
+// **************** GET ALL BLOGS **************************
 const blogIndex = (req, res) => {
 
   // CAN CHAIN ON METHODS TO FUTHER CUSTOMIZE/FILTER ITEMS.
@@ -20,7 +23,7 @@ const blogIndex = (req, res) => {
 });
 }
 
-// ********** GET BY ID (INDIVIDUAL BLOG) ***********
+// **************** GET BY ID (INDIVIDUAL BLOG) *************
 
 // ARE THE VARIABLE PARTS OF THE ROUTE THAT MAY CHANGE EX: ID.
 // localhost:3000/blogs/:id (id CAN CHANGE)
@@ -38,13 +41,13 @@ const getBlogById = (req, res) => {
     })
 }
 
-// ********** CREATE BLOG FORM ***********
+// **************** CREATE BLOG FORM ************************
 
 const createBlogForm = (req, res) => {
     res.render("blogs/create", {title : "Create"});
 }
 
-// ********** CREATE BLOG POST REQUEST ***********
+// **************** CREATE BLOG POST REQUEST ****************
 
 const createBlogPostReq = (req, res) => {
     const blog = new Blog(req.body);
@@ -57,7 +60,7 @@ const createBlogPostReq = (req, res) => {
     })
 }
 
-// ********** DELETE BY ID ***********
+// **************** DELETE BY ID ****************************
 
 const deleteById = (req, res) => {
     const id = req.params.id;
@@ -72,6 +75,10 @@ const deleteById = (req, res) => {
         console.log(error);
     })
 }
+
+
+// ************************* EXPORTS ***************************
+// *************************************************************
 
 // EXPORTING FUNCTIONS FOR USE IN App.js
     module.exports = {
