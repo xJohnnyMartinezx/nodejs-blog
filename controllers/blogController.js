@@ -25,15 +25,13 @@ const blogIndex = (req, res) => {
 
 // **************** GET BY ID (INDIVIDUAL BLOG) *************
 
-// ARE THE VARIABLE PARTS OF THE ROUTE THAT MAY CHANGE EX: ID.
-// localhost:3000/blogs/:id (id CAN CHANGE)
-// NEED TO USE : TO DENOTE A ROUTE PARAMETER.
 const getBlogById = (req, res) => {      
     const id = req.params.id; 
     Blog.findById(id)
     .then((result) => {
+        // HAVE TO PROVIDE DIR PATH IN VIEWS DIR "blogs/details"
         res.render("blogs/details", {blog: result, title: "Blog Detail"});
-        console.log("getBlogById works");
+        // console.log("getBlogById works");
     })                                               
     .catch((error) => {
         res.status(404).render("404", {title : "Blog not found."})

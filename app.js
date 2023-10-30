@@ -6,8 +6,11 @@
     // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
     const mongoose = require("mongoose");
 
+    const morgan = require("morgan");
+
     // IMPORTING BLOG ROUTES
-    const blogRoutes = require("./routes/blogRoutes")
+    const blogRoutes = require("./routes/blogRoutes");
+    const userRoutes = require("./routes/userRoutes");
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
@@ -45,8 +48,6 @@
         // THIS MIDDLEWARE ALLOW TO USE req.body AND GET ALL OF THE PROPERTIES BEING PASSED.
             app.use(express.urlencoded({extended: true}));
 
-            const morgan = require("morgan");
-
 
         //************ ROUNTING AND HTML ************ */
         // ********* OLD METHOD BEFORE CREATING blogRoutes.js ************
@@ -68,6 +69,10 @@
         // BY ADDING A FIRST PARAM "/blogs" WE ARE SCOPING OUT THE BLOGS ROUTES.
         // BASICALLY ADDING A PREFIX TO OUR BLOG ROUTES EX: /blogs/index, /blogs/create, /blogs/:id
         app.use("/blogs", blogRoutes); 
+
+// ************************** BLOG ROUTES **********************************
+
+        app.use("/users", userRoutes);
 
 
 //************************* REDIRECTS AND 404's ******************************
