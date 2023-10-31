@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ******* HEAD ******* -->
+    <%- include("./partials/head.ejs") %>
+<!-- ****************** -->
+<body>
+
+<!-- ******** NAVBAR PARTIAL ******** -->
+
+<%- include("./partials/nav.ejs") %>
+
+<!-- ******************************** -->
+
+
+<div class="create-blog content">
+    <form action="/login" method="POST" >
+
+        <label for="email">Email Address:</label>
+        <input type="text" id="email" name="email" placeholder="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="password" required>
+
+        <button>Submit</button>
+    </form>
+    <p>Don't have an account? <a href="users/create">Signup</a></p>
+
+</div>
+    <!-- ******* FOOTER ******* -->
+    <%- include("./partials/footer.ejs") %>
+    <!-- ********************** -->
+</body>
+</html>

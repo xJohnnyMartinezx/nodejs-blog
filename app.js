@@ -2,6 +2,8 @@
     // NEED TO IMPORT EXPRESS USING REQUIRE METHOD.
     const { log } = require("console");
     const express = require("express");
+    const path = require("path");
+    // const bcrypt = require(bcrypt);
 
     // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
     const mongoose = require("mongoose");
@@ -9,8 +11,9 @@
     const morgan = require("morgan");
 
     // IMPORTING BLOG ROUTES
-    const blogRoutes = require("./routes/blogRoutes");
-    const userRoutes = require("./routes/userRoutes");
+    const blogRoutes = require("./src/routes/blogRoutes");
+    const userRoutes = require("./src/routes/userRoutes");
+const { collection } = require("./src/models/blog");
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
@@ -51,6 +54,11 @@
 
         //************ ROUNTING AND HTML ************ */
         // ********* OLD METHOD BEFORE CREATING blogRoutes.js ************
+
+        // ********* Login ***********
+        app.get("/login", (req, res) => {
+            res.render("login", {title : "Login"});
+        })
 
         app.get("/", (req, res) => {
             res.render("home", {title : "Home"});

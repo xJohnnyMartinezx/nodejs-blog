@@ -2,23 +2,59 @@
 <html lang="en">
 
 <!-- ******* HEAD ******* -->
-    <%- include("../partials/head.ejs") %>
-<!-- ****************** -->
+<%- include("../partials/head.ejs") %>
+<!-- ******************** -->
 
 <body>
 
 <!-- ******** NAVBAR PARTIAL ******** -->
 <%- include("../partials/nav.ejs") %>
-<!-- ******************************** -->
+<!-- ************* BLOG CONTENT ******************* -->
 
+    <div class="details content">
+        <h2><%= user.fullname %></h2> <!-- ACCESSING THE CONTENTS OF THE "title" PROP IN THE "blog" OBJ. OBJ = blog, PROP = title  -->
+        <div class="content">
+            <p><%= user.userName %></p><!-- ACCESSING THE CONTENTS OF THE "body" PROP IN THE "blog" OBJ. OBJ = blog, PROP = body  -->
+            <p><%= user._id %></p>
+        </div>
 
-    <div class="blogs content">
-        <h2>User Profile Page.</h2>
+        <!-- <a id="delete-btn" data-blogDoc="  ">
+        <img src="/trashcan.svg" alt="Delete button">
+        </a> -->
 
-    
     </div>
-    <!-- ******* FOOTER ******* -->
-    <%- include("../partials/footer.ejs") %>
-    <!-- ********************** -->
+
+    <script>
+    //     const deleteBtn = document.querySelector("#delete-btn");
+
+    //     deleteBtn.addEventListener("click", (e) => {
+    //         // TO ACCESS EJS VARIABLES IN VANILLA JS, THEY NEED TO BE PLACED IN A STRING "".
+    //         const blogId = "<%= user._id %>";
+    //         const endPoint = "/blogs/" + blogId;
+    //         // console.log(`delete btn has been clicked`);
+    //         console.log(endPoint);
+        
+    //     // NOW WE WANT TO SEND THIS DELETE REQUEST TO THE ENDPOINT USING THE FETCH API
+    //     //     vvv SPECIFYING ENDPOINT FROM ABOVE. SECOND PARAM IS AN OPTIONS OBJ WITH METHOD TYPE. IN THIS CASE "DELETE"
+    //     fetch(endPoint, {
+    //         method: "DELETE"
+    //     })
+    //     //      vvv JSON DATA COMING BACK FROM THE SERVERSIDE DELETE REQUEST.
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data)
+    //         window.location.href = data.redirect
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     })
+    // })
+
+    </script>
+    
+
+        <!-- ******* FOOTER ******* -->
+        <%- include("../partials/footer.ejs") %>
+        <!-- ********************** -->
 </body>
 </html>
