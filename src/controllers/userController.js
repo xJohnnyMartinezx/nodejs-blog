@@ -1,6 +1,7 @@
 
 const User = require("../models/user");
 
+
 // ************************* ROUTE FUNCTIONS ***************************
 // *********************************************************************
 
@@ -38,25 +39,31 @@ const createUserForm = (req, res) => {
 
 // **************** CREATE USER POST REQUEST ****************
 
-const createUserReqest = (req, res) => {
+const createUserReqest = async (req, res) => {
 
     const user = new User(req.body);
 
     // CHECK IF USER ALREADY EXISTS
-    const existingUser = User.findOne({email : req.body.email});
-    // console.log(existingUser);
+                                                    //vvv THIS IS THE USER IMPUTTED EMAIL
+    const existingUser = await User.findOne({email : req.body.email});
+                            //  ^^ findOne() WILL LOOK THORUGH COLLETION OF users AND RETURN THE FIRST MATCH.
+                            // IF STATMENT BELOW IS CHECKING IF USER INPUTTED EMAIL MATCHES ANY FOUND BY findOne();
+  
 
     if(existingUser){
         res.send("User already exists, create a new user or try resetting your password.");
         // let redir = res.redirect("/users/create");
+        console.log(`${existingUser} already exists!`)
     } else {
+        
         const saltRounds = 10;
         const hashedPassword = bcrypt.hash(req.body.password, saltRounds);
         req.body.password = hashedPassword;
 
     user.save()
+    console.log(`new user created`)
     .then((result) => {
-        res.redirect("/users");
+        res.redirect("/");
     })
     .catch((error) => {
         console.log(error);

@@ -13,7 +13,7 @@
     // IMPORTING BLOG ROUTES
     const blogRoutes = require("./src/routes/blogRoutes");
     const userRoutes = require("./src/routes/userRoutes");
-const { collection } = require("./src/models/blog");
+// const { collection } = require("./src/models/blog");
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
@@ -78,7 +78,7 @@ const { collection } = require("./src/models/blog");
         // BASICALLY ADDING A PREFIX TO OUR BLOG ROUTES EX: /blogs/index, /blogs/create, /blogs/:id
         app.use("/blogs", blogRoutes); 
 
-// ************************** BLOG ROUTES **********************************
+// ************************** USER ROUTES **********************************
 
         app.use("/users", userRoutes);
 
