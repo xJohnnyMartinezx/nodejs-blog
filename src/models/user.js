@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 // SCHEMA IS WHAT WILL DEFINE THE STRUCTURE OF OUR DOCUMENT THAT WILL BE STORE IN A COLLECTION.
 
 // Schema IS A CONSTRUCTOR FUNCTION;
@@ -28,6 +29,18 @@ const userSchema = new Schema({
 {
     // AUTO CREATES TIMESTAMPS
     timestamps: true
+});
+
+// CREATING AN ASYNC FUNC TO ATTEMPT TO HASH THE PASSWORD BEFORE THE .save() METHOD IS CALLED IN createUserRequest FUNCTION IN userController FILE.
+userSchema.pre("save", async function (next) {
+    try {
+        const saltRounds = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(this.password, saltRounds);
+        this.password = hashedPassword;
+        next();
+    } catch (error) {
+        next(error)
+    }
 });
 
 

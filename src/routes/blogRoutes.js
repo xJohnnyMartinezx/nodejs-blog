@@ -27,6 +27,9 @@ const router = express.Router();
     router.post("/", blogController.createBlogPostReq);
 
     // ***** FIND BY ID ********  
+        // ARE THE VARIABLE PARTS OF THE ROUTE THAT MAY CHANGE EX: ID.
+        // localhost:3000/blogs/:id (id CAN CHANGE)
+        // NEED TO USE : TO DENOTE A ROUTE PARAMETER.
     router.get("/:id", blogController.getBlogById);
 
     // ***** DELETE BY ID ********   
@@ -34,7 +37,7 @@ const router = express.Router();
 
 
 
-    
+
 // *************************** EXPORTS *************************************
 // *************************************************************************
     // EXPORTTING THE ROUTER FOR USE IN app.js

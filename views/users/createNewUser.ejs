@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ******* HEAD ******* -->
+<%- include("../partials/head.ejs") %>
+<!-- ******************** -->
+<body>
+<!-- ******** NAVBAR PARTIAL ******** -->
+
+<!-- FOR PARTIALS MUST USE includes() FUNCTION -->
+<!-- MINUS SIGN DOESNT ESCAPE SPECIAL CHARACTERS AND = DOES SO WITH = WE END UP A STRING VALUE. -->
+<%- include("../partials/nav.ejs") %>
+
+<!-- ******************************** -->
+    <div class="create-blog content">
+        <form action="/users" method="POST" >
+            <label for="fullName">Full Name:</label>
+            <!-- WILL USE THE NAME PROP TO ACCESS THE PROVIDED DATA ON THE SERVER -->
+            <input type="text" id="fullName" required name="fullName">
+
+            <label for="userName">Username:</label>
+            <input type="text" id="userName" required name="userName">
+
+            <label for="email">Email Address:</label>
+            <input type="text" id="email" required name="email">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required name="password">
+
+            <button>Submit</button>
+        </form>
+
+    </div>
+    
+
+        <!-- ******* FOOTER ******* -->
+        <%- include("../partials/footer.ejs") %>
+        <!-- ********************** -->
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ******* HEAD ******* -->
+    <%- include("../partials/head.ejs") %>
+<!-- ****************** -->
+
+<body>
+
+<!-- ******** NAVBAR PARTIAL ******** -->
+<%- include("../partials/nav.ejs") %>
+<!-- ******************************** -->
+
+
+    <div class="blogs content">
+        <h2>All Users</h2>
+        <!-- CONDITIONAL USING EJS SYNTAX EAMPLE:  -->
+            <% if (users.length > 0) { %>
+            <% users.forEach((user) => { %>
+
+                <a class="single" href="/users/<%= user._id %>">    
+                <h3 class="title"><%= user.userName %></h3>
+                <p class="snippet"><%= user.blogs %></p>
+                </a>
+
+            <% }) %>    <!-- NEED TO CLOSE OFF forEach() -->
+            <% } else { %> 
+                 <p>There are no Blogs...</p>
+            <% } %>     <!-- NEED TO CLOSE OFF IF STATMENT CONDITIONAL -->
+
+
+
+    </div>
+    <!-- ******* FOOTER ******* -->
+    <%- include("../partials/footer.ejs") %>
+    <!-- ********************** -->
+</body>
+</html>
