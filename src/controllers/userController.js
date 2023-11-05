@@ -1,11 +1,13 @@
 
-const User = require("../models/user");
+const User = require("../Models/user");
+// const userService = require("../Services/userService");
 
 
 // ************************* ROUTE FUNCTIONS ***************************
 // *********************************************************************
 
 // **************** GET ALL USERS **************************
+// const userIndex = (userService.userIndexService);
 const userIndex = (req, res) => {
     User.find().sort({ createdAt: -1 })
         .then((result) => {
