@@ -1,7 +1,7 @@
 // THIS CONTROLLER WILL CONTAIN ALL LOGIC FOR ANY REQUEST HAVING TO DO WITH BLOGS.
 
 // IMPORT Blog MODEL.
-const Blog = require("../models/blog");
+const Blog = require("../Models/blog");
 
 
 // ************************* ROUTE FUNCTIONS ***************************

@@ -4,6 +4,7 @@
     const express = require("express");
     const path = require("path");
     // const bcrypt = require(bcrypt);
+    const dbConnection = require("./src/Config/server");
 
     // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
     const mongoose = require("mongoose");
@@ -13,7 +14,7 @@
     // IMPORTING BLOG ROUTES
     const blogRoutes = require("./src/routes/blogRoutes");
     const userRoutes = require("./src/routes/userRoutes");
-// const { collection } = require("./src/models/blog");
+
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.

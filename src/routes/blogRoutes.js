@@ -1,7 +1,7 @@
 const express = require("express");
 
 // IMPORTING THE BLOG CONTROLLER FUNCTIONS
-const blogController = require("../controllers/blogController");
+const blogController = require("../Controllers/blogController");
 
 // CREATING A NEW INSTANCE OF THE ROUTER OBJ. WHICH IS KIND OF AN EMULATION OF app.js
 const router = express.Router();
