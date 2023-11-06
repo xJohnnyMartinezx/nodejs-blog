@@ -39,30 +39,37 @@ const createUserForm = (req, res) => {
     res.render("users/createNewUser", { title: "Create User" });
 }
 
-// **************** CREATE USER POST REQUEST ****************
+// **************** CREATE USER (POST REQUEST) ****************
 
 const createUserReqest = async (req, res) => {
+    try {
+        
+        const user = new User(req.body);
 
-    const user = new User(req.body);
-
-    // CHECK IF USER ALREADY EXISTS
-                                                         //vvv THIS IS THE USER IMPUTTED EMAIL
-    const existingUser = await User.findOne({ email: req.body.email });
-                                  //  ^^ findOne() WILL LOOK THORUGH COLLETION OF users AND RETURN THE FIRST MATCH.
-    // IF STATMENT BELOW IS CHECKING IF USER INPUTTED EMAIL MATCHES ANY FOUND BY findOne();
-    if (existingUser) {
-        res.send("User already exists, create a new user or try resetting your password.");
-        console.log(`${existingUser} already exists!`);
-    } else {
-        console.log(`new user created`);
-        user.save()
-            .then((result) => {
-                res.redirect("/");
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        // CHECK IF USER ALREADY EXISTS
+                                                             //vvv THIS IS THE USER IMPUTTED EMAIL
+        const existingUser = await User.findOne({ email: req.body.email });
+                                      //  ^^ findOne() WILL LOOK THORUGH COLLETION OF users AND RETURN THE FIRST MATCH.
+        // IF STATMENT BELOW IS CHECKING IF USER INPUTTED EMAIL MATCHES ANY FOUND BY findOne();
+        if (existingUser) {
+            res.send("User already exists, create a new user or try resetting your password.");
+            console.log(`${existingUser} already exists!`);
+        } else {
+            console.log(`new user created`);
+            user.save()
+                .then((result) => {
+                    res.redirect("/login");
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    } catch (error) {
+        console.log(error);
+        res.redirect("/create")
     }
+
+
 }
 
 

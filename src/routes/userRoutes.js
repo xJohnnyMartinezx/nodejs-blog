@@ -1,5 +1,5 @@
 const express = require("express");
-const userController = require("../controllers/userController");
+const userController = require("../Controllers/userController");
 const router = express.Router();
 
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
     router.get("/", userController.userIndex);
 
-    // *********** CREATING A NEW BLOG ************
+    // *********** CREATING A NEW USER (FORM) ************
     router.get("/create", userController.createUserForm);
 
     // ******* POST REQUEST ********
