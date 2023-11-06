@@ -3,8 +3,8 @@
     const { log } = require("console");
     const express = require("express");
     const path = require("path");
-    // const bcrypt = require(bcrypt);
-    const dbConnection = require("./src/Config/server");
+  
+  
 
     // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
     const mongoose = require("mongoose");
@@ -12,8 +12,9 @@
     const morgan = require("morgan");
 
     // IMPORTING BLOG ROUTES
-    const blogRoutes = require("./src/routes/blogRoutes");
-    const userRoutes = require("./src/routes/userRoutes");
+    const blogRoutes = require("./src/Routes/blogRoutes");
+    const userRoutes = require("./src/Routes/userRoutes");
+    const authRoutes = require("./src/Routes/authRoutes");
 
 
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
@@ -57,9 +58,7 @@
         // ********* OLD METHOD BEFORE CREATING blogRoutes.js ************
 
         // ********* Login ***********
-        app.get("/login", (req, res) => {
-            res.render("login", {title : "Login"});
-        })
+        app.use(authRoutes);
 
         app.get("/", (req, res) => {
             res.render("home", {title : "Home"});
