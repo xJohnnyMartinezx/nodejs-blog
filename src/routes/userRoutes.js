@@ -19,7 +19,7 @@ const authMiddleware = require("../Controllers/authController")
         // ARE THE VARIABLE PARTS OF THE ROUTE THAT MAY CHANGE EX: ID.
         // localhost:3000/blogs/:id (id CAN CHANGE)
         // NEED TO USE : TO DENOTE A ROUTE PARAMETER.
-    router.get("/:id", userController.userProfile);
+    router.get("/:id", authMiddleware.authMiddleware, userController.userProfile);
 
 
 
