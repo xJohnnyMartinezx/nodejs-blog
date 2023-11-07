@@ -1,8 +1,5 @@
 const User = require("../Models/user");
-const loging = require("../Models/login");
 const bcrypt = require("bcrypt");
-const userController = require("../Controllers/userController.js");
-const userRouter = require("../Routes/userRoutes");
 const jwt = require("jsonwebtoken");
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -22,6 +19,7 @@ const token = req.cookies.token;
         try {
             const decoded = jwt.verify(token, jwtSecret);
             req.userId = decoded.userId;
+            console.log(req.userId);
             next();
         } catch (error) {
             res.status(401).json({message: "Unauthorized"});

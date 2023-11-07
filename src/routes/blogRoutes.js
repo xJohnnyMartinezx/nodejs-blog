@@ -35,7 +35,7 @@ const router = express.Router();
     router.get("/:id", blogController.getBlogById);
 
     // ***** DELETE BY ID ********   
-    router.delete("/:id", blogController.deleteById)
+    router.delete("/:id", authMiddleware.authMiddleware, blogController.deleteById)
 
 
 
