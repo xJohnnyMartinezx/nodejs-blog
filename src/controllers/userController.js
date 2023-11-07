@@ -1,5 +1,6 @@
 
 const User = require("../Models/user");
+const authMiddleware = require("../Controllers/authController")
 // const userService = require("../Services/userService");
 
 

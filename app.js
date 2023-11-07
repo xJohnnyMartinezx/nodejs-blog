@@ -2,7 +2,13 @@
     // NEED TO IMPORT EXPRESS USING REQUIRE METHOD.
     const { log } = require("console");
     const express = require("express");
+    require("dotenv").config();
     const path = require("path");
+    const cookieParser = require("cookie-parser");
+    const MongoStore = require("connect-mongo");
+    const session = require("express-session");
+    
+ 
   
   
 
@@ -17,12 +23,14 @@
     const authRoutes = require("./src/Routes/authRoutes");
 
 
+
     // THE REQUIRE METHOD ABOVE IS RETURNING A FUNCTION THAT IS BEING STORED IN THE const express VARIABLE.
     // NEXT WE ARE INVOKING THAT RETURNED FUNCTION AND STORING IT IN app. SETTING A CONST NAMED "app" IS COMMON PRACTICE.
     const app = express();
 
     // MONGODB CONNECTION
-    const dbURI = "mongodb://localhost:27017/SimpleBlogDB"
+    // const dbURI = "mongodb://localhost:27017/SimpleBlogDB"
+    const dbURI = process.env.MongoDb_URI;
 
     mongoose.connect(dbURI)
     .then((result) => {
@@ -52,6 +60,20 @@
         // POST REQUEST MIDDLEWARE
         // THIS MIDDLEWARE ALLOW TO USE req.body AND GET ALL OF THE PROPERTIES BEING PASSED.
             app.use(express.urlencoded({extended: true}));
+
+            app.use(cookieParser());
+
+            app.use(session({
+                secret: "secretThings",
+                resave: false,
+                saveUninitialized: true,
+                store: MongoStore.create({
+                    mongoUrl: dbURI
+                }),
+                // CAN SET A COOKIE EXPIRATION DATE
+                // cookie: {maxAge: new Date (DAte.now() + (3600000))}
+                
+            }));
 
 
         //************ ROUNTING AND HTML ************ */
