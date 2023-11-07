@@ -3,6 +3,8 @@ const express = require("express");
 // IMPORTING THE BLOG CONTROLLER FUNCTIONS
 const blogController = require("../Controllers/blogController");
 
+const authMiddleware = require("../Controllers/authController")
+
 // CREATING A NEW INSTANCE OF THE ROUTER OBJ. WHICH IS KIND OF AN EMULATION OF app.js
 const router = express.Router();
 
@@ -21,7 +23,7 @@ const router = express.Router();
     router.get("/", blogController.blogIndex);
 
     // *********** CREATING A NEW BLOG ************
-    router.get("/create", blogController.createBlogForm);
+    router.get("/create", authMiddleware.authMiddleware, blogController.createBlogForm);
 
     // ******* POST REQUEST ********
     router.post("/", blogController.createBlogPostReq);

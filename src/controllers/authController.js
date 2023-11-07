@@ -8,6 +8,29 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
 
+// AUTH MIDDLEWARE FUNCTION 
+// **** THIS MIDDLEWARE CAN BE EXPORTED AND ADDED TO PAGES THAT REQUIRE A USER TO BE LOGGIN TO BE VIEWED *********
+const authMiddleware = (req, res, next) => {
+    // GETTING COOKIE FROM THE BROWSER
+const token = req.cookies.token;
+// CHECKING IF TOKEN EXISTS
+    if(!token){
+        return res.status(401).json({message: "Unauthorized"});
+        // CAN DO res.render AND RENDER A EJS PAGE
+    } else {
+        // IF TOKEN DOES EXIST, THEN DECODE IT AND COMPARE IT TO JWT_SECRET IN EVN FILE.
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userId = decoded.userId;
+            next();
+        } catch (error) {
+            res.status(401).json({message: "Unauthorized"});
+            console.log(error);
+        }
+    }
+}
+
+
 
 
 // **************** LOGIN FORM ************************
@@ -72,5 +95,6 @@ const loginAuth = async (req, res) => {
 // EXPORT FUNCTION
 module.exports = {
     redernLoginForm,
-    loginAuth
+    loginAuth, 
+    authMiddleware
 }
