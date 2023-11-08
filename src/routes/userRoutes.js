@@ -27,3 +27,4 @@ const authMiddleware = require("../Controllers/authController")
 // *************************************************************************
     // EXPORTTING THE ROUTER FOR USE IN app.js
     module.exports = router;
+    // test comment
