@@ -2,6 +2,9 @@
 
 // IMPORT Blog MODEL.
 const Blog = require("../Models/blog");
+const User = require("../Models/user");
+const auth = require("../Controllers/authController");
+
 
 
 // ************************* ROUTE FUNCTIONS ***************************
@@ -47,7 +50,19 @@ const createBlogForm = (req, res) => {
 
 // **************** CREATE BLOG POST REQUEST ****************
 
+// const createBlogPostReq = (req, res) => {
+//     const blog = new Blog(req.body);
+//     blog.save()
+//     .then((result) => {
+//         res.redirect("/blogs");
+//     })
+//     .catch((error) => {
+//         console.log(error);
+//     })
+// }
+
 const createBlogPostReq = (req, res) => {
+    // const user = User.
     const blog = new Blog(req.body);
     blog.save()
     .then((result) => {
@@ -57,6 +72,18 @@ const createBlogPostReq = (req, res) => {
         console.log(error);
     })
 }
+
+// const testUserId = async (req, res) => {
+//     const id = auth.currentUserId();
+
+// console.log(`line 79: ${id}`);
+
+// }
+
+// testUserId();
+
+
+
 
 // **************** DELETE BY ID ****************************
 
