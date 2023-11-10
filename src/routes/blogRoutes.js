@@ -23,7 +23,7 @@ const router = express.Router();
     router.get("/", blogController.blogIndex);
 
     // *********** CREATING A NEW BLOG ************
-    router.get("/create", authMiddleware.authMiddleware, blogController.createBlogForm);
+    router.get("/create", authMiddleware.currentUserId, blogController.createBlogForm);
 
     // ******* POST REQUEST ********
     router.post("/", blogController.createBlogPostReq);
@@ -36,6 +36,7 @@ const router = express.Router();
 
     // ***** DELETE BY ID ********   
     router.delete("/:id", authMiddleware.authMiddleware, blogController.deleteById)
+
 
 
 

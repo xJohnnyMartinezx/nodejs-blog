@@ -31,6 +31,30 @@ const token = req.cookies.token;
 
 
 
+const currentUserId = (req, res, next) => {
+    const token = req.cookies.token;
+    if(!token){
+        return res.status(401).json({message: "Unauthorized"});
+        // CAN DO res.render AND RENDER A EJS PAGE
+    } else {
+        // IF TOKEN DOES EXIST, THEN DECODE IT AND COMPARE IT TO JWT_SECRET IN EVN FILE.
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userId = decoded.userId;
+            next();
+        } catch (error) {
+            res.status(401).json({message: "Unauthorized"});
+            console.log(error);
+        }
+    }
+    console.log(`line 50: ${req.userId}`);
+    return req.userId;
+}
+
+// currentUserId();
+
+
+
 // **************** LOGIN FORM ************************
 
 const redernLoginForm = (req, res) => {
@@ -67,6 +91,7 @@ const loginAuth = async (req, res) => {
     try {
         const userInDb = await User.findOne({ email: req.body.email });
         if(!userInDb){
+            console.log(`line 70: ${userInDb}`);
             console.log("Invalid credientials.");
             res.redirect("/login");
         } else {
@@ -103,5 +128,6 @@ module.exports = {
     redernLoginForm,
     loginAuth, 
     authMiddleware,
-    logoutFunc
+    logoutFunc, 
+    currentUserId
 }

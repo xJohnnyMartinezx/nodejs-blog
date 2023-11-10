@@ -16,6 +16,10 @@ const blogSchema = new Schema({
     body: {
         type: String,
         required: true
+    },
+    userId: {
+        type: String,
+        required: true
     }
 }, 
 {

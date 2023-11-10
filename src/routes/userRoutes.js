@@ -1,7 +1,9 @@
 const express = require("express");
 const userController = require("../Controllers/userController");
 const router = express.Router();
-const authMiddleware = require("../Controllers/authController")
+const authMiddleware = require("../Controllers/authController");
+const blogController = require("../Controllers/blogController");
+
 
 
 // ************************** USER ROUTES **********************************
@@ -20,6 +22,12 @@ const authMiddleware = require("../Controllers/authController")
         // localhost:3000/blogs/:id (id CAN CHANGE)
         // NEED TO USE : TO DENOTE A ROUTE PARAMETER.
     router.get("/:id", authMiddleware.authMiddleware, userController.userProfile);
+
+
+    
+    
+    
+ 
 
 
 
