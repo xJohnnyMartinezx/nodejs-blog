@@ -90,9 +90,18 @@ const loginAuth = async (req, res) => {
     }
 } 
 
+// **************** LOGOUT ************************
+
+const logoutFunc = (req, res) => {
+
+    res.clearCookie("token");
+    res.redirect("/login");
+}
+
 // EXPORT FUNCTION
 module.exports = {
     redernLoginForm,
     loginAuth, 
-    authMiddleware
+    authMiddleware,
+    logoutFunc
 }

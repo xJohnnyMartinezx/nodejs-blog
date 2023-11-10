@@ -9,7 +9,11 @@ const router = express.Router();
     // *********** RENDERING LOGIN FORM ************
     router.get("/login", authController.redernLoginForm);
 
+    // *********** LOGIN POST REQUEST ************
     router.post("/login", authController.loginAuth);
+
+    // *********** LOGOUT REQUEST ************
+    router.get("/logout", authController.logoutFunc);
 
 
 // *************************** EXPORTS *************************************
