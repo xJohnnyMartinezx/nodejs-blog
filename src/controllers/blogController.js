@@ -4,6 +4,9 @@
 const Blog = require("../Models/blog");
 const User = require("../Models/user");
 const auth = require("../Controllers/authController");
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET;
+
 
 
 
@@ -61,9 +64,15 @@ const createBlogForm = (req, res) => {
 //     })
 // }
 
-const createBlogPostReq = (req, res) => {
-    // const user = User.
+const createBlogPostReq = (req, res, next) => {
+ 
+    token = req.cookies.token;
+    const decoded = jwt.verify(token, jwtSecret);
+
     const blog = new Blog(req.body);
+    const currLoggedinUserId  = decoded.userId;
+    blog.set({userId: currLoggedinUserId})
+   
     blog.save()
     .then((result) => {
         res.redirect("/blogs");
