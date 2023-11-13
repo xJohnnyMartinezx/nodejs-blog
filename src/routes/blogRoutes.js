@@ -23,7 +23,7 @@ const router = express.Router();
     router.get("/", blogController.blogIndex);
 
     // *********** CREATING A NEW BLOG ************
-    router.get("/create", blogController.createBlogForm);
+    router.get("/create", authMiddleware.authMiddleware, blogController.createBlogForm);
 
     // ******* POST REQUEST ********
     router.post("/", blogController.createBlogPostReq);

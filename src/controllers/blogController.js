@@ -64,14 +64,14 @@ const createBlogForm = (req, res) => {
 //     })
 // }
 
-const createBlogPostReq = (req, res, next) => {
+const createBlogPostReq = (req, res) => {
  
-    token = req.cookies.token;
-    const decoded = jwt.verify(token, jwtSecret);
+    // token = req.cookies.token;
+    // const decoded = jwt.verify(token, jwtSecret);
 
     const blog = new Blog(req.body);
-    const currLoggedinUserId  = decoded.userId;
-    blog.set({userId: currLoggedinUserId})
+    // const currLoggedinUserId  = decoded.userId;
+    blog.set({userId: auth.currentUserId(req, res)})
    
     blog.save()
     .then((result) => {

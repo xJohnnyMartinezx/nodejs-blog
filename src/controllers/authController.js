@@ -54,6 +54,17 @@ const token = req.cookies.token;
 // currentUserId();
 
 
+const currentUserId = (req, res) => {
+    token = req.cookies.token;
+    const decoded = jwt.verify(token, jwtSecret);
+
+        const currLoggedinUserId  = decoded.userId;
+
+        return currLoggedinUserId;
+
+}
+
+
 
 // **************** LOGIN FORM ************************
 
@@ -129,5 +140,5 @@ module.exports = {
     loginAuth, 
     authMiddleware,
     logoutFunc, 
-    // currentUserId
+    currentUserId
 }
