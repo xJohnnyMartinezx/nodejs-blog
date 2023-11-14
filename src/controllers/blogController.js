@@ -56,8 +56,8 @@ const createBlogPostReq = async (req, res) => {
         const userId = auth.currentUserId(req);
     blog.save()
     .then( async(newBlog)=>{                              // vv THIS $push ADDS THE NEW BLOG ID TO blogIdsd ARR IN USER SCHEMA  
-        const user = await User.findByIdAndUpdate(userId, {$push: {blogIds: newBlog._id}});
-        user.save();
+        await User.findByIdAndUpdate(userId, {$push: {blogIds: newBlog._id}});
+        // user.save();
     })
     .then((result) => {
         res.redirect("/blogs");
