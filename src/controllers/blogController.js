@@ -50,32 +50,14 @@ const createBlogForm = (req, res) => {
 
 // **************** CREATE BLOG POST REQUEST ****************
 
-// const createBlogPostReq = (req, res) => {
-//     const blog = new Blog(req.body);
-//                         //vvv USING MIDDLEWARE SET THE LOGGED IN USER'S ID
-//     blog.set({userId: auth.currentUserId(req)})
-//     blog.save()
-//     .then((result) => {
-//         res.redirect("/blogs");
-//     })
-//     .catch((error) => {
-//         console.log(error);
-//     })
-// }
-
-const createBlogPostReq = (req, res) => {
+const createBlogPostReq = async (req, res) => {
     const blog = new Blog(req.body);
-    const userId = auth.currentUserId(req);
-    // const user = User.findOne({_id: userId})
-    // console.log(`line 69 ${user}`);
                         //vvv USING MIDDLEWARE SET THE LOGGED IN USER'S ID
-
+        const userId = auth.currentUserId(req);
     blog.save()
-    .then((newBlog)=>{
-        
-        // console.log(`line 74: ${newBlog._id}`);
-        const user = User.findOne({_id: userId})
-        user.blogId.set(newBlog._id);
+    .then( async(newBlog)=>{                              // vv THIS $push ADDS THE NEW BLOG ID TO blogIdsd ARR IN USER SCHEMA  
+        const user = await User.findByIdAndUpdate(userId, {$push: {blogIds: newBlog._id}});
+        user.save();
     })
     .then((result) => {
         res.redirect("/blogs");
