@@ -4,9 +4,6 @@
 const Blog = require("../Models/blog");
 const User = require("../Models/user");
 const auth = require("../Controllers/authController");
-const jwt = require("jsonwebtoken");
-const jwtSecret = process.env.JWT_SECRET;
-
 
 
 
@@ -55,6 +52,8 @@ const createBlogForm = (req, res) => {
 
 // const createBlogPostReq = (req, res) => {
 //     const blog = new Blog(req.body);
+//                         //vvv USING MIDDLEWARE SET THE LOGGED IN USER'S ID
+//     blog.set({userId: auth.currentUserId(req)})
 //     blog.save()
 //     .then((result) => {
 //         res.redirect("/blogs");
@@ -64,16 +63,20 @@ const createBlogForm = (req, res) => {
 //     })
 // }
 
-const createBlogPostReq = (req, res, next) => {
- 
-    token = req.cookies.token;
-    const decoded = jwt.verify(token, jwtSecret);
-
+const createBlogPostReq = (req, res) => {
     const blog = new Blog(req.body);
-    const currLoggedinUserId  = decoded.userId;
-    blog.set({userId: currLoggedinUserId})
-   
+    const userId = auth.currentUserId(req);
+    // const user = User.findOne({_id: userId})
+    // console.log(`line 69 ${user}`);
+                        //vvv USING MIDDLEWARE SET THE LOGGED IN USER'S ID
+
     blog.save()
+    .then((newBlog)=>{
+        
+        // console.log(`line 74: ${newBlog._id}`);
+        const user = User.findOne({_id: userId})
+        user.blogId.set(newBlog._id);
+    })
     .then((result) => {
         res.redirect("/blogs");
     })
@@ -81,17 +84,6 @@ const createBlogPostReq = (req, res, next) => {
         console.log(error);
     })
 }
-
-// const testUserId = async (req, res) => {
-//     const id = auth.currentUserId();
-
-// console.log(`line 79: ${id}`);
-
-// }
-
-// testUserId();
-
-
 
 
 // **************** DELETE BY ID ****************************
