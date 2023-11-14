@@ -1,7 +1,6 @@
 
 const User = require("../Models/user");
-const authMiddleware = require("../Controllers/authController")
-// const userService = require("../Services/userService");
+const Blog = require("../Models/blog");
 
 
 // ************************* ROUTE FUNCTIONS ***************************
@@ -31,7 +30,7 @@ const userProfile = (req, res) => {
         })
         .catch((error) => {
             console.log(error);
-        })
+        });
 }
 
 // **************** CREATE USER FORM ************************

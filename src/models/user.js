@@ -21,7 +21,13 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    blogIds: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: "blogId"
+        }
+    ]
 }, 
 {
     // AUTO CREATES TIMESTAMPS
