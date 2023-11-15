@@ -1,6 +1,8 @@
 
 const User = require("../Models/user");
 const Blog = require("../Models/blog");
+const auth = require("../Controllers/authController");
+const { all } = require("../Routes/blogRoutes");
 
 
 // ************************* ROUTE FUNCTIONS ***************************
@@ -22,16 +24,42 @@ const userIndex = (req, res) => {
 // **************** GO TO USER PROFILE **************************
 
 const userProfile = (req, res) => {
+    // const userId = auth.currentUserId(req)
+    // console.log(`line 27: ${userId}`);
     const id = req.params.id;
     User.findById(id)
-        .then((result) => {            // vvv BEING DIRECTLY REFERENCED IN PROFILE HTML
-            res.render("users/profile", { user: result, title: "User Profile" });
+        .then( async (result) => {            // vvv BEING DIRECTLY REFERENCED IN PROFILE HTML
+            // res.render("users/profile", { user: result, title: "User Profile" });
             // console.log(result);
+            
+            let allBlogs = await Blog.find().sort({createdAt: -1})
+           
+            // allBlogs.forEach((blog) => {
+                // console.log(blog._id);
+                res.render("users/profile", { user: result, title: "User Profile", blogs: allBlogs, });
+                // console.log(allBlogs);
+                // res.render("users/profile", {blogs: blog})
+            // })
+
         })
         .catch((error) => {
             console.log(error);
         });
+        // Blog.find().sort({createdAt: -1})
+        // .then((result) => {
+        //     res.render({ blogs: result});
+        // }).catch((error) => {
+        //     console.log(error);
+        // })
 }
+
+// **************** GET ALL POSTS BY CURRENT USER **************************
+
+// const getAllPostsByUser = (req, res) => {
+//     const userId = auth.currentUserId(req)
+//     console.log(`line 41: ${userId}`);
+// }
+
 
 // **************** CREATE USER FORM ************************
 
@@ -81,5 +109,5 @@ module.exports = {
     userIndex,
     userProfile,
     createUserForm,
-    createUserReqest
+    createUserReqest,
 }

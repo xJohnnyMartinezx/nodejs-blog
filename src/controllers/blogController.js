@@ -52,7 +52,7 @@ const createBlogForm = (req, res) => {
 
 const createBlogPostReq = async (req, res) => {
     const blog = new Blog(req.body);
-                        //vvv USING MIDDLEWARE SET THE LOGGED IN USER'S ID
+                        //vvv USING MIDDLEWARE GET THE LOGGED IN USER'S ID
         const userId = auth.currentUserId(req);
     blog.save()
     .then( async(newBlog)=>{                // vv THIS $push ADDS THE NEW BLOG ID TO blogIdsd ARR IN USER SCHEMA  
@@ -83,6 +83,12 @@ const deleteById = (req, res) => {
         console.log(error);
     })
 }
+
+// *********** BLOG MIDDLEWARE ***************
+// const getAllBlogsByUser = (req, res) => {
+
+
+// }
 
 
 // ************************* EXPORTS ***************************
