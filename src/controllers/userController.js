@@ -23,34 +23,28 @@ const userIndex = (req, res) => {
 
 
 
-// **************** GET ALL POSTS BY CURRENT USER **************************
+// **************** DISPLAY BLOGS CREATED BY USER ON RPOFILE PAGE **************************
 
-const getAllPostsByUser = async (req, res) => {
+const getAllBlogsByUser = async (req, res) => {
 
     const id = req.params.id;
     let user = await User.findById(id);
+    // RETRIEVING ARRAY OF BLOG IDS STORED IN USER MODEL.
     let userBlogIdsArr = user.blogIds;
     // console.log(userBlogIdsArr);
-
-        
-        let allBlogs = await Blog.find();
-       
-        let arrOfBlogIds = [];
-
+    // RETRIEVING ALL BLOG OBJECTS.
+    let allBlogs = await Blog.find();
+       // SETTING AN EMPTY ARRAY FOR MATCHING IDS
+        let matchingIds = [];
+        // LOOPING THROUGH ALL BLOG OBJECTS
         allBlogs.forEach((blog) => {
-            arrOfBlogIds.push(blog._id);
-            });
-
-            // console.log(arrOfBlogIds);
-
-            let matchingIds = [];
-    arrOfBlogIds.forEach((blogId) => {
-        
-        if(userBlogIdsArr.includes(blogId)) {
-            matchingIds.push(blogId);
-        }
-    }) 
-    console.log(`line 53: ${matchingIds}`);
+            // IF ANY BLOG OBJ IDs MATCH THE BLOG IDs IN THE USER MODEL,
+            // THEN PUSH THE ENTIRE BLOG OBJ TO matchingIds ARRAY.  
+            if(userBlogIdsArr.includes(blog._id)) {
+            matchingIds.push(blog);
+            }
+        }) 
+    return matchingIds;
 }
 
 
@@ -61,8 +55,10 @@ const userProfile = (req, res) => {
     const id = req.params.id;
     User.findById(id)
         .then( async (result) => {  
-            getAllPostsByUser(req);
-            res.render("users/profile", { user: result, title: "User Profile"});
+            // USING getAllBlogsByUser FUNC TO PUPULATE BLOGS WITH MATCHING IDs
+            let matchingIds = await getAllBlogsByUser(req);
+            // console.log(`line 60: ${matchingIds}`);
+            res.render("users/profile", { user: result, title: "User Profile", matchingBlogIds: matchingIds});
         })
         .catch((error) => {
             console.log(error);
