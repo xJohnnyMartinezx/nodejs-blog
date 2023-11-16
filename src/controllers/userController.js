@@ -1,6 +1,8 @@
 
 const User = require("../Models/user");
 const Blog = require("../Models/blog");
+const auth = require("../Controllers/authController");
+const { all } = require("../Routes/blogRoutes");
 
 
 // ************************* ROUTE FUNCTIONS ***************************
@@ -19,19 +21,54 @@ const userIndex = (req, res) => {
         });
 }
 
+
+
+// **************** GET ALL POSTS BY CURRENT USER **************************
+
+const getAllPostsByUser = async (req, res) => {
+
+    const id = req.params.id;
+    let user = await User.findById(id);
+    let userBlogIdsArr = user.blogIds;
+    // console.log(userBlogIdsArr);
+
+        
+        let allBlogs = await Blog.find();
+       
+        let arrOfBlogIds = [];
+
+        allBlogs.forEach((blog) => {
+            arrOfBlogIds.push(blog._id);
+            });
+
+            // console.log(arrOfBlogIds);
+
+            let matchingIds = [];
+    arrOfBlogIds.forEach((blogId) => {
+        
+        if(userBlogIdsArr.includes(blogId)) {
+            matchingIds.push(blogId);
+        }
+    }) 
+    console.log(`line 53: ${matchingIds}`);
+}
+
+
 // **************** GO TO USER PROFILE **************************
 
 const userProfile = (req, res) => {
+
     const id = req.params.id;
     User.findById(id)
-        .then((result) => {            // vvv BEING DIRECTLY REFERENCED IN PROFILE HTML
-            res.render("users/profile", { user: result, title: "User Profile" });
-            // console.log(result);
+        .then( async (result) => {  
+            getAllPostsByUser(req);
+            res.render("users/profile", { user: result, title: "User Profile"});
         })
         .catch((error) => {
             console.log(error);
         });
 }
+
 
 // **************** CREATE USER FORM ************************
 
@@ -81,5 +118,5 @@ module.exports = {
     userIndex,
     userProfile,
     createUserForm,
-    createUserReqest
+    createUserReqest,
 }

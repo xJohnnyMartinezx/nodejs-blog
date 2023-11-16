@@ -63,7 +63,7 @@ const loginAuth = async (req, res) => {
                 res.redirect("/login");
             } else {
                 // SAVING A TOKEN TO THE COOKIE
-                const token = jwt.sign({userId: userInDb._id}, jwtSecret);
+                const token = jwt.sign({userId: userInDb._id}, jwtSecret, { expiresIn: '2h' });
                 res.cookie("token", token, {httpOnly: true});
                 console.log("Login Successful.");
                 res.redirect(`users/${userInDb._id}`);
