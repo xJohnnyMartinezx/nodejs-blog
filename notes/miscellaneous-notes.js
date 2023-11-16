@@ -23,3 +23,11 @@
    
 
 // <% }) %>
+
+
+
+                    
+{/* <a class="single" href="/blogs/<%= userBlogId._id %>">    
+<h3 class="title"><%= userBlogId.title %></h3>
+<p class="snippet"><%= userBlogId.snippet %></p>
+</a> */}

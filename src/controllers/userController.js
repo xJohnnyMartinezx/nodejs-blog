@@ -21,44 +21,53 @@ const userIndex = (req, res) => {
         });
 }
 
+
+
+// **************** GET ALL POSTS BY CURRENT USER **************************
+
+const getAllPostsByUser = async (req, res) => {
+
+    const id = req.params.id;
+    let user = await User.findById(id);
+    let userBlogIdsArr = user.blogIds;
+    // console.log(userBlogIdsArr);
+
+        
+        let allBlogs = await Blog.find();
+       
+        let arrOfBlogIds = [];
+
+        allBlogs.forEach((blog) => {
+            arrOfBlogIds.push(blog._id);
+            });
+
+            // console.log(arrOfBlogIds);
+
+            let matchingIds = [];
+    arrOfBlogIds.forEach((blogId) => {
+        
+        if(userBlogIdsArr.includes(blogId)) {
+            matchingIds.push(blogId);
+        }
+    }) 
+    console.log(`line 53: ${matchingIds}`);
+}
+
+
 // **************** GO TO USER PROFILE **************************
 
 const userProfile = (req, res) => {
-    // const userId = auth.currentUserId(req)
-    // console.log(`line 27: ${userId}`);
+
     const id = req.params.id;
     User.findById(id)
-        .then( async (result) => {            // vvv BEING DIRECTLY REFERENCED IN PROFILE HTML
-            // res.render("users/profile", { user: result, title: "User Profile" });
-            // console.log(result);
-            
-            let allBlogs = await Blog.find().sort({createdAt: -1})
-           
-            // allBlogs.forEach((blog) => {
-                // console.log(blog._id);
-                res.render("users/profile", { user: result, title: "User Profile", blogs: allBlogs, });
-                // console.log(allBlogs);
-                // res.render("users/profile", {blogs: blog})
-            // })
-
+        .then( async (result) => {  
+            getAllPostsByUser(req);
+            res.render("users/profile", { user: result, title: "User Profile"});
         })
         .catch((error) => {
             console.log(error);
         });
-        // Blog.find().sort({createdAt: -1})
-        // .then((result) => {
-        //     res.render({ blogs: result});
-        // }).catch((error) => {
-        //     console.log(error);
-        // })
 }
-
-// **************** GET ALL POSTS BY CURRENT USER **************************
-
-// const getAllPostsByUser = (req, res) => {
-//     const userId = auth.currentUserId(req)
-//     console.log(`line 41: ${userId}`);
-// }
 
 
 // **************** CREATE USER FORM ************************
