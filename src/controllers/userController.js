@@ -23,7 +23,7 @@ const userIndex = (req, res) => {
 
 
 
-// **************** DISPLAY BLOGS CREATED BY USER ON RPOFILE PAGE **************************
+// **************** DISPLAY BLOGS CREATED BY USER ON RPOFILE PAGE (MIDDLEWARE)**************************
 
 const getAllBlogsByUser = async (req, res) => {
 
