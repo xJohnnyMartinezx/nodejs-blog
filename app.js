@@ -30,7 +30,7 @@
 
     // MONGODB CONNECTION
     // const dbURI = "mongodb://localhost:27017/SimpleBlogDB"
-    const dbURI = process.env.MongoDb_URI;
+    const dbURI = process.env.MONGODB_URI;
 
     mongoose.connect(dbURI)
     .then((result) => {
