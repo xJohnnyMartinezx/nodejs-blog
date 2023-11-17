@@ -75,6 +75,12 @@ const loginAuth = async (req, res) => {
     }
 } 
 
+
+// // **************** AUTO LOGOUT ON TOKEN EXPIRE ***************
+// const autoLogout = (req){
+
+// }
+
 // **************** LOGOUT ************************
 
 const logoutFunc = (req, res) => {
