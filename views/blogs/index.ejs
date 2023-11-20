@@ -3,7 +3,7 @@
 <!-- ******* HEAD ******* -->
     <%- include("../partials/head.ejs") %>
 <!-- ****************** -->
-<body>
+<body class="container-fluid">
     <!-- ********* PASSING DATA INTO VIEWS NOTES ******** -->
     <!-- EJS COMMENT TAG IS: <%# %> -->
     <!--   EJS TAG EXAMPLE: <%# const name = "Johnny" %>   -->
@@ -19,16 +19,25 @@
 <!-- ******************************** -->
 
 
-    <div class="blogs content">
+    <div class="blogs content row">
         <h2>All Blogs</h2>
         <!-- CONDITIONAL USING EJS SYNTAX EAMPLE:  -->
             <% if (blogs.length > 0) { %>
             <% blogs.forEach((blog) => { %>
 
-                <a class="single" href="/blogs/<%= blog._id %>">    
-                <h3 class="title"><%= blog.title %></h3>
-                <p class="snippet"><%= blog.snippet %></p>
-                </a>
+<!--                <a class="single" href="/blogs/<%= blog._id %>">    -->
+<!--                <h3 class="title"><%= blog.title %></h3>-->
+<!--                <p class="snippet"><%= blog.snippet %></p>-->
+<!--                </a>-->
+
+
+                <div class="card row" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= blog.title %></h5>
+                        <p class="card-text"><%= blog.snippet %></p>
+                        <a href="/blogs/<%= blog._id %>" class="btn btn-primary">Blog Details</a>
+                    </div>
+                </div>
 
             <% }) %>    <!-- NEED TO CLOSE OFF forEach() -->
             <% } else { %> 
@@ -36,7 +45,7 @@
             <% } %>     <!-- NEED TO CLOSE OFF IF STATMENT CONDITIONAL -->
 
     </div>
-    <!-- ******* FOOTER ******* -->
+    <!-- ******* FOOTER INCLUDING BOOTSTRAP JS ******* -->
     <%- include("../partials/footer.ejs") %>
     <!-- ********************** -->
 </body>
