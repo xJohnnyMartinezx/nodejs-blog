@@ -7,7 +7,7 @@ const router = express.Router();
 // *************************************************************************
 
     // *********** RENDERING LOGIN FORM ************
-    router.get("/login", authController.redernLoginForm);
+    router.get("/login", authController.renderLoginForm);
 
     // *********** LOGIN POST REQUEST ************
     router.post("/login", authController.loginAuth);
@@ -18,5 +18,5 @@ const router = express.Router();
 
 // *************************** EXPORTS *************************************
 // *************************************************************************
-    // EXPORTTING THE ROUTER FOR USE IN app.js
+    // EXPORTING THE ROUTER FOR USE IN app.js
     module.exports = router;

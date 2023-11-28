@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 
-        //************ ROUNTING AND HTML ************ */
+        //************ ROUTING AND HTML ************ */
 
 
 // ************************** BLOG ROUTES **********************************
@@ -43,5 +43,5 @@ const router = express.Router();
 
 // *************************** EXPORTS *************************************
 // *************************************************************************
-    // EXPORTTING THE ROUTER FOR USE IN app.js
+    // EXPORTING THE ROUTER FOR USE IN app.js
     module.exports = router;

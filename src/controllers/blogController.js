@@ -4,6 +4,7 @@
 const Blog = require("../Models/blog");
 const User = require("../Models/user");
 const auth = require("../Controllers/authController");
+const {result} = require("lodash/object");
 
 
 
@@ -13,8 +14,8 @@ const auth = require("../Controllers/authController");
 // **************** GET ALL BLOGS **************************
 const blogIndex = (req, res) => {
 
-  // CAN CHAIN ON METHODS TO FUTHER CUSTOMIZE/FILTER ITEMS.
-  // EXAMPLE: .sort() METHOD. THE (-1) MEANS DECENDING ORDER, SO NEWEST BLOG WILL BE ON TOP OF PAGE.
+  // CAN CHAIN ON METHODS TO FURTHER CUSTOMIZE/FILTER ITEMS.
+  // EXAMPLE: .sort() METHOD. THE (-1) MEANS DESCENDING ORDER, SO NEWEST BLOG WILL BE ON TOP OF PAGE.
   // Blog.find()
     Blog.find().sort({createdAt: -1})
     .then((result) => {
@@ -28,18 +29,15 @@ const blogIndex = (req, res) => {
 
 // **************** GET BY ID (INDIVIDUAL BLOG) *************
 
-const getBlogById = (req, res) => {      
-    const id = req.params.id; 
-    Blog.findById(id)
-    .then((result) => {
-        // HAVE TO PROVIDE DIR PATH IN VIEWS DIR "blogs/details"
-        res.render("blogs/details", {blog: result, title: "Blog Detail"});
-        // console.log("getBlogById works");
-    })                                               
-    .catch((error) => {
+const getBlogById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await  Blog.findById(id)
+        return await res.render("blogs/details", {blog: result, title: "Blog Detail"});
+    } catch (error) {
         res.status(404).render("404", {title : "Blog not found."})
         console.log(error);
-    })
+    }
 }
 
 // **************** CREATE BLOG FORM ************************
@@ -55,7 +53,7 @@ const createBlogPostReq = async (req, res) => {
                         //vvv USING MIDDLEWARE GET THE LOGGED IN USER'S ID
         const userId = auth.currentUserId(req);
     blog.save()
-    .then( async(newBlog)=>{                // vv THIS $push ADDS THE NEW BLOG ID TO blogIdsd ARR IN USER SCHEMA  
+    .then( async(newBlog)=>{                // vv THIS $push ADDS THE NEW BLOG ID TO blogIds ARR IN USER SCHEMA
         await User.findByIdAndUpdate(userId, {$push: {blogIds: newBlog._id}});
         // The $push operator appends specified items into an array without loading them first into memory.
     })
