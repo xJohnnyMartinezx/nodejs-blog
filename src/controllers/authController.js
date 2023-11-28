@@ -6,7 +6,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 
 // ****** AUTH MIDDLEWARE FUNCTION ***** TO VIEW AUTHORIZED WEBPAGES
-// **** THIS MIDDLEWARE CAN BE EXPORTED AND ADDED TO PAGES THAT REQUIRE A USER TO BE LOGGIN TO BE VIEWED *********
+// **** THIS MIDDLEWARE CAN BE EXPORTED AND ADDED TO PAGES THAT REQUIRE A USER TO BE LOGGED IN TO BE VIEWED *********
 const authorizedUser = (req, res, next) => {
     // GETTING COOKIE FROM THE BROWSER
 const token = req.cookies.token;
@@ -28,9 +28,9 @@ const token = req.cookies.token;
     }
 }
 
-// ********* CUSTOM MIDDLEWARE TO RETRIVE LOGGED IN USER'S ID ****************
+// ********* CUSTOM MIDDLEWARE TO RETRIEVE LOGGED IN USER'S ID ****************
 const currentUserId = (req) => {
-    token = req.cookies.token;
+    let token = req.cookies.token;
     const decoded = jwt.verify(token, jwtSecret);
         const currLoggedinUserId  = decoded.userId;
         return currLoggedinUserId;
@@ -40,7 +40,7 @@ const currentUserId = (req) => {
 
 // **************** LOGIN FORM ************************
 
-const redernLoginForm = (req, res) => {
+const renderLoginForm = (req, res) => {
     res.render("auth/login", {title : "Login"});
 }
 
@@ -52,7 +52,7 @@ const loginAuth = async (req, res) => {
         const userInDb = await User.findOne({ email: req.body.email });
         if(!userInDb){
             console.log(`line 70: ${userInDb}`);
-            console.log("Invalid credientials.");
+            console.log("Invalid credentials.");
             res.redirect("/login");
         } else {
 
@@ -76,11 +76,6 @@ const loginAuth = async (req, res) => {
 } 
 
 
-// // **************** AUTO LOGOUT ON TOKEN EXPIRE ***************
-// const autoLogout = (req){
-
-// }
-
 // **************** LOGOUT ************************
 
 const logoutFunc = (req, res) => {
@@ -91,7 +86,7 @@ const logoutFunc = (req, res) => {
 
 // EXPORT FUNCTION
 module.exports = {
-    redernLoginForm,
+    renderLoginForm,
     loginAuth, 
     authorizedUser,
     logoutFunc, 

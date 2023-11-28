@@ -15,7 +15,7 @@ const blogController = require("../Controllers/blogController");
     router.get("/create", userController.createUserForm);
 
     // ******* POST REQUEST ********
-    router.post("/", userController.createUserReqest);
+    router.post("/", userController.createUserRequest);
 
     // ***** FIND BY ID ********  
         // ARE THE VARIABLE PARTS OF THE ROUTE THAT MAY CHANGE EX: ID.
@@ -34,6 +34,6 @@ const blogController = require("../Controllers/blogController");
 
 // *************************** EXPORTS *************************************
 // *************************************************************************
-    // EXPORTTING THE ROUTER FOR USE IN app.js
+    // EXPORTING THE ROUTER FOR USE IN app.js
     module.exports = router;
     // test comment
