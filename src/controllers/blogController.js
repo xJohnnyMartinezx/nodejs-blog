@@ -50,11 +50,10 @@ const createBlogPostReq = async (req, res) => {
     const blog = new Blog(req.body);
                             //vvv USING MIDDLEWARE GET THE LOGGED IN USER'S ID
     const userId = auth.currentUserId(req);
-    const newBlog = await blog.save()
-                                            // vv THIS $push ADDS THE NEW BLOG ID TO blogIds ARR IN USER SCHEMA
+    const newBlog = await blog.save()       // vv THIS $push ADDS THE NEW BLOG ID TO blogIds ARR IN USER SCHEMA
         await User.findByIdAndUpdate(userId, {$push: {blogIds: newBlog._id}});
-                                             // The $push operator appends specified items into an array without loading them first into memory.
-            return res.redirect("/blogs");
+                                           // The $push operator appends specified items into an array without loading them first into memory.
+        return res.redirect("/blogs");
     } catch (error){
         console.log(error)
     }
@@ -63,18 +62,20 @@ const createBlogPostReq = async (req, res) => {
 
 // **************** DELETE BY ID ****************************
 
-const deleteById = (req, res) => {
-    const id = req.params.id;
-    Blog.findByIdAndDelete(id)
-    .then((result) => {
-        // WHEN SENDING AN AJAX REQUEST, WE CANNOT USE res.redirect IN NODE AS A RESPONSE. 
-        // WE HAVE TO SEND JSON OR TEXT DATA BACK TO THE BROWSER.
-        // res.redirect("/blogs")  *** CANNOT DO THIS.
-        res.json({ redirect: "/blogs"})
-    })
-    .catch((error) => {
+const deleteById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const blog = await Blog.findById(id);
+        const userId = auth.currentUserId(req);
+        await User.findByIdAndUpdate(userId, {$pull: {blogIds: blog._id}});
+        await Blog.findByIdAndDelete(id);
+                // WHEN SENDING AN AJAX REQUEST, WE CANNOT USE res.redirect IN NODE AS A RESPONSE.
+                // WE HAVE TO SEND JSON OR TEXT DATA BACK TO THE BROWSER.
+                // res.redirect("/blogs")  *** CANNOT DO THIS.
+        return res.json({redirect: "/blogs"});
+    } catch (error) {
         console.log(error);
-    })
+    }
 }
 
 // *********** BLOG MIDDLEWARE ***************
