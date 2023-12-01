@@ -9,15 +9,25 @@ const {all} = require("../Routes/blogRoutes");
 
 // **************** GET ALL USERS **************************
 // const userIndex = (userService.userIndexService);
-const userIndex = (req, res) => {
-    User.find().sort({createdAt: -1})
-        .then((result) => {
-            //                                                 vvv BEING DIRECTLY REFERENCED IN INDEX HTML FOREACH
-            res.render("users/userIndex", {title: "All Users", users: result})
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+// const userIndex = (req, res) => {
+//     User.find().sort({createdAt: -1})
+//         .then((result) => {
+//             //                                                 vvv BEING DIRECTLY REFERENCED IN INDEX HTML FOREACH
+//             res.render("users/userIndex", {title: "All Users", users: result})
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         });
+// }
+
+const userIndex = async (req, res) => {
+    try {
+        const allUsersResult = await User.find().sort({createdAt: -1})
+                //                                                 vvv BEING DIRECTLY REFERENCED IN INDEX HTML FOREACH
+        return res.render("users/userIndex", {title: "All Users", users: allUsersResult})
+    } catch(error) {
+        console.log(error);
+    }
 }
 
 
