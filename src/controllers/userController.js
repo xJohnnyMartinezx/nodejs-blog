@@ -8,18 +8,6 @@ const {all} = require("../Routes/blogRoutes");
 // *********************************************************************
 
 // **************** GET ALL USERS **************************
-// const userIndex = (userService.userIndexService);
-// const userIndex = (req, res) => {
-//     User.find().sort({createdAt: -1})
-//         .then((result) => {
-//             //                                                 vvv BEING DIRECTLY REFERENCED IN INDEX HTML FOREACH
-//             res.render("users/userIndex", {title: "All Users", users: result})
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//         });
-// }
-
 const userIndex = async (req, res) => {
     try {
         const allUsersResult = await User.find().sort({createdAt: -1})
@@ -35,24 +23,28 @@ const userIndex = async (req, res) => {
 
 const getAllBlogsByUser = async (req, res) => {
 
-    const id = req.params.id;
-    let user = await User.findById(id);
-    // RETRIEVING ARRAY OF BLOG IDS STORED IN USER MODEL.
-    let userBlogIdsArr = user.blogIds;
-    // console.log(userBlogIdsArr);
-    // RETRIEVING ALL BLOG OBJECTS.
-    let allBlogs = await Blog.find();
-    // SETTING AN EMPTY ARRAY FOR MATCHING IDS
-    let matchingIds = [];
-    // LOOPING THROUGH ALL BLOG OBJECTS
-    allBlogs.forEach((blog) => {
-        // IF ANY BLOG OBJ IDs MATCH THE BLOG IDs IN THE USER MODEL,
-        // THEN PUSH THE ENTIRE BLOG OBJ TO matchingIds ARRAY.
-        if (userBlogIdsArr.includes(blog._id)) {
-            matchingIds.push(blog);
-        }
-    })
-    return matchingIds;
+    try {
+        const id = req.params.id;
+        let user = await User.findById(id);
+        // RETRIEVING ARRAY OF BLOG IDS STORED IN USER MODEL.
+        let userBlogIdsArr = user.blogIds;
+        // console.log(userBlogIdsArr);
+        // RETRIEVING ALL BLOG OBJECTS.
+        let allBlogs = await Blog.find();
+        // SETTING AN EMPTY ARRAY FOR MATCHING IDS
+        let matchingIds = [];
+        // LOOPING THROUGH ALL BLOG OBJECTS
+        allBlogs.forEach((blog) => {
+            // IF ANY BLOG OBJ IDs MATCH THE BLOG IDs IN THE USER MODEL,
+            // THEN PUSH THE ENTIRE BLOG OBJ TO matchingIds ARRAY.
+            if (userBlogIdsArr.includes(blog._id)) {
+                matchingIds.push(blog);
+            }
+        })
+        return matchingIds;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
