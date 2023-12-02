@@ -66,7 +66,7 @@ const deleteById = async (req, res) => {
     try {
         const id = req.params.id;
         const blog = await Blog.findById(id);
-        const userId = auth.currentUserId(req);
+        const userId = auth.currentUserId(req);//vv $pull DELETES THE BLOG ID FROM blogIds ARR IN USER SCHEMA
         await User.findByIdAndUpdate(userId, {$pull: {blogIds: blog._id}});
         await Blog.findByIdAndDelete(id);
                 // WHEN SENDING AN AJAX REQUEST, WE CANNOT USE res.redirect IN NODE AS A RESPONSE.
@@ -77,13 +77,6 @@ const deleteById = async (req, res) => {
         console.log(error);
     }
 }
-
-// *********** BLOG MIDDLEWARE ***************
-// const getAllBlogsByUser = (req, res) => {
-
-
-// }
-
 
 // ************************* EXPORTS ***************************
 // *************************************************************
