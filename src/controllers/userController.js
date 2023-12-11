@@ -50,19 +50,31 @@ const getAllBlogsByUser = async (req, res) => {
 
 // **************** GO TO USER PROFILE **************************
 
-const userProfile = (req, res) => {
+// const userProfile = (req, res) => {
+//
+//     const id = req.params.id;
+//     User.findById(id)
+//         .then(async (result) => {
+//             // USING getAllBlogsByUser FUNC TO POPULATE BLOGS WITH MATCHING IDs
+//             let matchingIds = await getAllBlogsByUser(req);
+//             // console.log(`line 60: ${matchingIds}`);
+//             res.render("users/profile", {user: result, title: "User Profile", matchingBlogIds: matchingIds});
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         });
+// }
 
-    const id = req.params.id;
-    User.findById(id)
-        .then(async (result) => {
-            // USING getAllBlogsByUser FUNC TO POPULATE BLOGS WITH MATCHING IDs
-            let matchingIds = await getAllBlogsByUser(req);
-            // console.log(`line 60: ${matchingIds}`);
-            res.render("users/profile", {user: result, title: "User Profile", matchingBlogIds: matchingIds});
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+const userProfile = async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const userById = await User.findById(id)
+        let matchingIds = await getAllBlogsByUser(req);
+        return res.render("users/profile", {user: userById, title: "User Profile", matchingBlogIds: matchingIds});
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
