@@ -7,10 +7,12 @@
     const cookieParser = require("cookie-parser");
     const MongoStore = require("connect-mongo");
     const session = require("express-session");
-    
- 
-  
-  
+    const jwtSecret = process.env.JWT_SECRET;
+
+
+
+
+
 
     // USING MONGOOSE PKG TO CONNECT TO THE DATABASE;
     const mongoose = require("mongoose");
@@ -63,8 +65,15 @@
 
             app.use(cookieParser());
 
+            // const session = () => {
+            //
+            // }
+
             app.use(session({
-                secret: "secretThings",
+                secret: jwtSecret,
+                httpOnly: true,
+                secure: true,
+                maxAge: 1000 * 60 * 60 * 7,
                 resave: false,
                 saveUninitialized: true,
                 store: MongoStore.create({
@@ -72,11 +81,11 @@
                 }),
                 // CAN SET A COOKIE EXPIRATION DATE
                 // cookie: {maxAge: new Date (DAte.now() + (3600000))}
-                
+
             }));
 
 
-        //************ ROUNTING AND HTML ************ */
+        //************ ROUTING AND HTML ************ */
         // ********* OLD METHOD BEFORE CREATING blogRoutes.js ************
 
         // ********* Login ***********

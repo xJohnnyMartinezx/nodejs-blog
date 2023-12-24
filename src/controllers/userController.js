@@ -55,6 +55,14 @@ const userProfile = async (req, res) => {
     try {
         const id = req.params.id;
         const userById = await User.findById(id)
+        console.log(res.session);
+
+        // const isLoggedIn = req.session.user = {
+        //     name,
+        //     isLoggedIn: true
+        // }
+
+        // console.log(name);
         // USING getAllBlogsByUser FUNC TO POPULATE BLOGS WITH MATCHING IDs
         let matchingIds = await getAllBlogsByUser(req);
         return res.render("users/profile", {user: userById, title: "User Profile", matchingBlogIds: matchingIds});
