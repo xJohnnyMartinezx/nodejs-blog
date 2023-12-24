@@ -1,12 +1,21 @@
 const User = require("../Models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const session = require("express-session")
 const jwtSecret = process.env.JWT_SECRET;
 
 
 // ****** AUTH MIDDLEWARE FUNCTION ***** TO VIEW AUTHORIZED WEBPAGES
 // **** THIS MIDDLEWARE CAN BE EXPORTED AND ADDED TO PAGES THAT REQUIRE A USER TO BE LOGGED IN TO BE VIEWED *********
+
+// **** FUNCTION TO SEE IF THE USER IS LOGGED IN *******
+
+// const isLoggedIn = (req, res) => {
+//     if (req.session){
+//
+//     }
+// }
+
 const authorizedUser = (req, res, next) => {
     // GETTING COOKIE FROM THE BROWSER
 const token = req.cookies.token;
